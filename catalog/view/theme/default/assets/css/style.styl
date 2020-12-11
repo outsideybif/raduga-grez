@@ -1,0 +1,284 @@
+// @import "./common/mixins"
+// @import "./common/variables"
+// @import "./common/mediaqueriesStep"
+@import "./common/normalized"
+@import "./common/common"
+
+.block
+  +mobile()
+    color mobile
+    
+  +tablet()
+    color tablet
+
+  +desktop()
+    color desktop
+
+  +hd()
+    color hd
+
+
+body
+  background #E1DFD3
+  font-family "Pangram", "Montserrat"
+
+h1
+  font-family: Hatton;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 45px;
+  
+  text-align: center;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space pre-line
+  +from-width('m')
+    font-size: 54px;
+    line-height: 138%;
+
+h2 
+  font-family: Hatton;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 164%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #292929;
+  white-space pre-line
+  +from-width('m')
+    font-size: 48px;
+    line-height: 153%;
+
+h3
+  font-family: Hatton;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 164%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space pre-line
+  +from-width('m')
+    font-size: 34px;
+    line-height: 164%;
+
+.header
+  font-family: Hatton;
+  font-size: 36px;
+  line-height: 45px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  +from-width('m')
+    font-size: 54px;
+    line-height: 138%;
+
+
+.title-large
+  font-family: Hatton;
+  
+  
+  text-transform: uppercase;
+  color: #292929;
+  font-size: 36px;
+  line-height: 164%;
+  +from-width('m')
+    font-size: 54px;
+    line-height: 138%;
+  +from-width('xl')
+    line-height: 140%;
+    letter-spacing: 0.07em;
+    font-size: 75px;
+
+.title-medium
+  font-family: Hatton;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 164%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #292929;
+  +from-width('m')
+    font-size: 36px;
+    line-height: 164%;
+  
+.title-medium-second
+  font-family: Hatton;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #292929;
+  font-size: 26px;
+  line-height: 164%;
+  +from-width('m')
+    font-size: 36px;
+    line-height: 164%;
+
+.title-small
+  font-family: Pangram;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 164%;
+  letter-spacing: 0.01em;
+  color: #292929;
+
+  +from-width('m')
+    font-size: 21px;
+    line-height: 170%;
+   
+    
+    
+
+p
+  font-family: Pangram;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 170%;
+  letter-spacing: 0.01em;
+  color: #292929;
+  margin 0
+  +from-width('m')
+    font-size: 16px;
+    line-height: 170%;
+
+
+
+body
+  //padding 40px
+
+
+.row
+  display flex
+
+.standard-layout  
+  padding-left $layout.x
+  padding-right $layout.x
+
+
+  +from-width('l')
+    padding-left $layout.xl.x
+    padding-right $layout.xl.x
+
+  +from-width('xl')
+    padding-left $layout.hd.x
+    padding-right $layout.hd.x
+
+
+
+.swiper-container
+    //width: 600px;
+    height 600px
+    +mobile()
+      height 100%
+
+
+.swiper-slide-categories 
+  width 100% !important
+
+
+
+
+
+
+
+.content-wrapper 
+  padding 12px 0px
+  margin: 0
+  font-family: Pangram;
+  font-size: 16px;
+  line-height: 170%;
+  letter-spacing: 0.01em;
+  color: #292929;
+
+
+
+
+
+
+
+
+
+.ind_standart
+    padding 360px 7%
+
+    +tablet()
+      padding 120px 26px
+
+    +mobile()
+      padding 100px 26px
+
+.ind-top-45
+  margin-top 45px
+  +mobile()
+    margin-top 18px
+
+
+.ind-top-38
+  margin-top 38px
+  +mobile()
+    margin-top 24px
+
+
+.email-field
+  position relative
+  display inline-block
+  font-family Pangram
+  font-size 24px
+  line-height 165%
+  letter-spacing 0.01em
+  color #292929
+  cursor pointer
+  
+
+  &::after
+    position absolute
+    bottom 0
+    left 0
+    content ''
+
+    width 100%
+    height 1.38px
+    background #292929
+    transform-origin center center
+    transform scale(1)
+    transition: .4s
+
+  &:hover::after
+      transform scale(0)
+
+  //border-bottom: 1.38px solid #292929;
+  
+.product-details-and-other-toys
+  display flex
+  flex-direction column
+
+.underline
+  position relative
+  padding-bottom 4px
+
+  &::after
+    position absolute
+    bottom 0
+    left 0
+    content ''
+    width 100%
+    height .75px
+    background currentColor
+    transition .4s transform
+
+  &:hover
+    &::after
+      transform scaleX(0)
+
+  &_invert
+
+    &::after
+      transform scaleX(0)
+
+    &:hover
+      &::after
+        transform scaleX(1)
+  

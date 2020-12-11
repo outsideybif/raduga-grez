@@ -1,0 +1,71 @@
+{{ header }}
+
+<stories-header class="stories-header">
+  <div class="stories-header__text-wrapper">
+    <div class="stories-header__date" style="color:{{story.title_color}}">{{story.added_date}}</div>
+    <div class="stories-header__title" style="color:{{story.title_color}}">{{story.title}}</div>
+  </div>
+  <div class="stories-header__decorative-image">
+
+    
+
+      {% if story.video != "" %}
+      <video data-scroll="" data-scroll-speed="-1" autoplay="" loop="" muted="" playsinline=""><source src="{{ story.video }}"></video>
+      {% else %}
+      <img data-scroll="" data-scroll-speed="-1" src="./image/{{story.image}}" class="is-inview" >
+      {% endif %}
+
+
+  </div>
+</stories-header>
+
+
+{% for ct in content %}
+  {{ ct.content }}
+{% endfor %}
+
+
+<stories-footer class="stories-footer">
+  <div class="stories-footer__author-wrappers">
+    <div class="stories-footer__author-wrapper">
+      <div class="stories-footer__author-label">Photo:</div>
+      <div class="stories-footer__author-value">{{story.author_photo}}</div>
+    </div>
+    <div class="stories-footer__author-wrapper">
+      <div class="stories-footer__author-label">Style:</div>
+      <div class="stories-footer__author-value">{{story.author_style}}</div>
+    </div>
+    <div class="stories-footer__author-wrapper">
+      <div class="stories-footer__author-label">Video:</div>
+      <div class="stories-footer__author-value">{{story.author_video}}</div>
+    </div>
+  </div>
+</stories-footer>
+
+
+
+
+<stories-next class="stories-next">
+   <div class="stories-next__story-next-information">
+      <div class="stories-next__next-label">Next story:</div>
+      <div class="stories-next__next-title">{{nextStory.title}}</div>
+   </div>
+   <div class="stories-next__story-next-image-wrapper">
+      <div class="stories-next__story-next-image"><img src="{{nextStory.thumb}}"></div>
+      <a class="stories-next__action" href="{{nextStory.href}}">
+         <circle-button class="circle-button white">
+            View more
+         </circle-button>
+      </a>
+   </div>
+</stories-next>
+
+
+{{ footer }} 
+
+
+
+
+
+
+

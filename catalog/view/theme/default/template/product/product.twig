@@ -1,0 +1,932 @@
+{{ header }}
+
+
+
+
+<product-header class="product-header" id="scroll-container">
+
+  <div class="product-header__sticky is-inview" data-scroll="" data-scroll-sticky="" data-scroll-target="#scroll-container">
+   <div class="product-header__information-mobile">
+      <div>
+         <div class="product-header__mobile-cateogry">{{ active_category.name }}</div>
+         <div class="product-header__mobile-name">{{ heading_title }}</div>
+      </div>
+      <div>
+         <div class="product-header__mobile-price-title">Price</div>
+         <div class="product-header__mobile-price">{{ price }}</div>
+      </div>
+   </div>
+   
+   
+   
+
+  <div class="product-header__media">
+    {% set imageIndex = 0 %}
+    {% for image in images %}
+      
+      {% if imageIndex == 0 %}
+        <img class="product-header__media-item" src="{{ image.thumb }}" alt="" role="presentation" style="visibility: visible; opacity: 1; z-index: 1">
+      {% else %}
+        <img class="product-header__media-item" src="{{ image.thumb }}" alt="" role="presentation" style="">
+      {% endif %}
+      {% set imageIndex = imageIndex + 1 %}
+     {% endfor %}
+    {# <video class="product-header__media-item" loop="" muted="" style="">
+      <source src="./assets/images/main.webm">
+    </video> #}
+    
+  </div>
+
+
+
+   <div class="product-header__information">
+      <div class="product-header__categories">
+        {# {% for breadcrumb in breadcrumbs %}
+          <a href="{{ breadcrumb.href }}" class="dark"><div class="product-header__cateogry">{{ breadcrumb.text }}</div></a>
+        {% endfor %} #}
+        <a href="{{ categoriesShop }}" class="dark"><div class="product-header__cateogry">All</div></a>
+        <a href="{{ active_category.link }}" class="dark"><div class="product-header__cateogry">{{ active_category.name }}</div></a>
+        
+        
+      </div>
+      <div class="product-header__name-wrapper">
+         <h3>{{ heading_title }}</h3>
+         <div class="product-header__share">
+            <div>Share</div>
+            <img src="./catalog/view/theme/default/assets/images/plus.svg">
+            <div class="product-header__share-list">
+               <div class="product-header__share-list-item" data-sharer="facebook">Facebook</div>
+               <div class="product-header__share-list-item" data-sharer="twitter">Twitter</div>
+            </div>
+         </div>
+      </div>
+      <div class="product-header__price">{{ price }}</div>
+      <div class="product-header__description">{{ description }}</div>
+      <div class="product-header__description-more">Read more</div>
+
+      
+      {% if quantity == 0 %}
+         <div class="product-header__actions-out">
+            <standart-button class="standart-button disabled">Out of stock</standart-button>
+            <div class="product-header__out-of-stock-title">Email me when this item is back in stock!</div>
+            <div class="product-header__out-of-stock-form">
+               <input-subscribe class="input-subscribe product" validation="email">
+                  <input class="input-subscribe__input subscribe-product-input" type="text" name="email" placeholder="email">
+                  <div class="input-subscribe__error">Not error</div>
+                  <div class="input-subscribe__arrow subscribe-product" data-name="{{heading_title}}"><img src="./catalog/view/theme/default/assets/images/arrow-right-dark.svg"></div>
+               </input-subscribe>
+            </div>
+         </div>
+      {% else %}
+       
+       
+      <div class="product-header__actions">
+         <standart-button class="standart-button buy-button">Add to cart</standart-button>
+         <div class="product-header__counter">
+            <div class="product-header__counter-minus">-</div>
+            <div class="product-header__counter-value">{{ minimum }}</div>
+            <div class="product-header__counter-plus">+</div>
+         </div>
+      </div>
+
+      {% endif %}
+      <div class="product-header__mobile-share">
+         <div>Share</div>
+         <img src="./catalog/view/theme/default/assets/images/plus.svg">
+         <div class="product-header__share-list mobile">
+            <div class="product-header__share-list-item" data-sharer="facebook">Facebook</div>
+            <div class="product-header__share-list-item" data-sharer="twitter">Twitter</div>
+         </div>
+      </div>
+   </div>
+  </div>
+
+</product-header>
+
+{# 
+ <button class="button" data-sharer="twitter" data-title="Checkout Sharer.js!" data-hashtags="awesome, sharer.js" data-url="https://ellisonleao.github.io/sharer.js/">Share on Twitter</button>
+<button class="button" data-sharer="facebook" data-hashtag="hashtag" data-url="https://ellisonleao.github.io/sharer.js/">Share on Facebook</button>
+ #}
+
+
+<script>
+
+$("body").on("click", ".buy-button", ()=>{
+  cart.add({{ product_id }}, $(".product-header__counter-value").html() );
+  $(".product-header__counter-value").html(1)
+});
+$("body").on("click", ".product-header__counter-minus", ()=>{
+  let oldValue = parseInt( $(".product-header__counter-value").html() );
+  if(oldValue > 1){
+    let newValue = oldValue - 1;
+    $(".product-header__counter-value").html(newValue)
+  }
+  
+  
+});
+$("body").on("click", ".product-header__counter-plus", ()=>{
+  let newValue = parseInt( $(".product-header__counter-value").html() ) + 1;
+  $(".product-header__counter-value").html(newValue);
+});
+
+</script>
+
+
+
+
+
+
+{% if isDetails == true %}
+
+<product-details class="product-details ind ind_standart">
+   <h3 class="product-details-title" animation="fade-up" animation-delay=".15" style="">Product details</h3>
+   <div class="product-details__infromations" animation="fade-up" animation-delay=".25" style="">
+      
+      
+      {% for attribute in attribute_details %}
+         <p-collapsible class="p-collapsible">
+            <span>{{attribute.name}}</span>
+            <div class="toggle-button">
+               <div class="horizontal"></div>
+               <div class="vertical"></div>
+            </div>
+         </p-collapsible>
+         <div class="collapsible-content">
+            <div class="collapsible-content-wrapper">
+               <p>{{attribute.text}}</p>
+            </div>
+         </div>
+
+      {% endfor %} 
+
+
+   </div>
+</product-details>
+
+ {% endif %}
+
+
+
+<how-to-use class="how-to-use">
+   <div class="how-to-use__image"><img src="{{thumb_how_to_use}}"></div>
+   <div class="how-to-use__information">
+      <div class="information-title" animation="fade-up" animation-delay=".15" style="">How to use?</div>
+      <div class="how-to-use__description">
+         
+
+
+          {% for how in howuse %}
+         <p class="information-description" animation="fade-up" animation-delay=".15" style="">{{how}}</p>
+         {% endfor %} 
+
+
+      </div>
+   </div>
+</how-to-use>
+
+
+
+<div class="product-details-and-other-toys">
+   <product-details class="product-details ind ind_standart">
+      <h3 class="product-details-title" animation="fade-up" animation-delay=".15" style="">FAQ</h3>
+      <div class="product-details__infromations" animation="fade-up" animation-delay=".25" style="">
+         <p-collapsible class="p-collapsible">
+            <span>Who, how and where makes the toys?</span>
+            <div class="toggle-button">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+            </div>
+          </p-collapsible>
+          <div class="collapsible-content">
+            <div class="collapsible-content-wrapper">
+                <p>We make toys from the wood which grows in our region. Our carpenters are working in the third generation. They used to make matryoshka dolls before, and now they work with us. All materials for the toys we buy in Russia, except for the German paint. The cotton bags for toys packing are sewn by mothers of many children, who are on their maternity leave and work from home.</p>
+            </div>
+          </div>
+          <p-collapsible class="p-collapsible">
+            <span>Are the toys safe to play?</span>
+            <div class="toggle-button">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+            </div>
+          </p-collapsible>
+          <div class="collapsible-content">
+            <div class="collapsible-content-wrapper">
+                <p>We use only solid wood and non-toxic water-based eco paint. The paint is approved for the age +0. We recommend children under three years old to play under parents supervision, as they may bite small particles of the wood.</p>
+            </div>
+          </div>
+          <p-collapsible class="p-collapsible">
+            <span>Do the toys have a smell?</span>
+            <div class="toggle-button">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+            </div>
+          </p-collapsible>
+          <div class="collapsible-content">
+            <div class="collapsible-content-wrapper">
+                <p>Our paint doesn’t smell at all. Linseed oil which we use for natural toys smells like linseed oil. The toys have a very delicate and pleasant natural smell of wood or oil.</p>
+            </div>
+          </div>
+          <p-collapsible class="p-collapsible">
+            <span>Why aren’t your toys smooth?</span>
+            <div class="toggle-button">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+            </div>
+          </p-collapsible>
+          <div class="collapsible-content">
+            <div class="collapsible-content-wrapper">
+                <p>Our toys are tactile. We never cover them with lacque, as it may contain harmful composition. After the surface is lacque, you can’t feel the texture of the wood. Our toys are velvety in touch, this helps to develop fine motor skills and to satisfy a child's tactile hunger. They are very comfortable and safe to play and leave no splinters on little hands.</p>
+            </div>
+          </div>
+          <p-collapsible class="p-collapsible">
+            <span>What is the toys’ duration period?</span>
+            <div class="toggle-button">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+            </div>
+          </p-collapsible>
+          <div class="collapsible-content">
+            <div class="collapsible-content-wrapper">
+                <p>If you take proper care of them, you will be able to present them to your grandchildren. As the toys are made of solid wood, keep them away from heating batteries or humidifiers. They are perfect for playing, but you should never use stackers or building sets as teething toys for your children. The toys are safe, but it is possible to bite small particles of the wood. Their solid parts (blocks, stacker rings etc.) are very durable, but the glued smaller details (a kettle lid, tomato tops etc.) are more fragile. Though we use the strongest of all non-toxic eco glues, we don’t recommend you to throw the toys. Their fragility is a good way to teach a child to be careful with toys, clothes and the world around.</p>
+            </div>
+          </div>
+          <p-collapsible class="p-collapsible">
+            <span>How to clean the toys?</span>
+            <div class="toggle-button">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+            </div>
+          </p-collapsible>
+          <div class="collapsible-content">
+            <div class="collapsible-content-wrapper">
+                <p>Wood is self-disinfecting and we cover the toys with paint or oil which protect them from dirt. You can use dry or wet cloth for cleaning, but do it gently, without rubbing and detergents.</p>
+            </div>
+          </div>
+          <p-collapsible class="p-collapsible">
+            <span>How can wood manufacturing be eco-friendly, if trees are cut for it?</span>
+            <div class="toggle-button">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+            </div>
+          </p-collapsible>
+          <div class="collapsible-content">
+            <div class="collapsible-content-wrapper">
+                <p>We buy wood from responsible suppliers. They grow forests for logging themselves, and after they cut trees they plant new ones. We don’t buy wood from private traders who damage forests. We are also against wood wasting. We use wood with its natural marks, because they are beautiful. Wood can’t be homogeneous like plastic. It has its marks and we never throw such wood away.</p>
+            </div>
+          </div>
+
+
+
+
+
+      </div>
+   </product-details>
+   
+
+   {% if products|length > 0 %}
+   <other-toys class="other-toys ind ind_standart">
+      <h3 class="other-toys-title">Other fine toys</h3>
+      <div class="other-toys__slider">
+         <div class="swiper-container swiper-container-other-products swiper-container-initialized swiper-container-horizontal">
+            <div class="swiper-wrapper swiper-wrapper-other-products" style="transform: translate3d(-1475px, 0px, 0px); transition: all 0ms ease 0s;">
+               
+               
+               {% for product in products %}
+               
+                  <div class="swiper-slide swiper-slide-other-products">
+                     <product-card class="product-card full" data-link="{{ product.href }}">
+                        <img src="{{ product.thumb }}">
+                        <div class="product-card__information">
+                           
+                           <a class="product-card__link-card" href="{{ product.href }}"></a>
+                           <div class="product-card__top-link">
+                           
+                                 <a href="{{ product.category_link }}"><div class="product-card__category">{{ product.category_name }}</div></a>
+                                 
+                           </div>
+                           <div class="product-card__top-link">
+                               <a href="{{ product.href }}" class="product-card__title">{{ product.name }}</a>
+                              <div class="product-card__price">{{ product.price }}</div>
+                              <div class="product-card__add-to-card underline" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');">Add to cart</div>
+                           </div>
+
+
+                        </div>
+                     </product-card>
+                  </div>
+               
+               {% endfor %}
+
+            </div>
+            <div class="categories-slider-navigation"></div>
+         </div>
+        
+      </div>
+       <div class="other-toys__navigation">
+        <div class="swiper-pagination-other-products"></div>
+            
+         </div>
+   </other-toys>
+  {% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{# {{ header }}
+<div id="product-product" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <div class="row"> {% if column_left or column_right %}
+        {% set class = 'col-sm-6' %}
+        {% else %}
+        {% set class = 'col-sm-8' %}
+        {% endif %}
+        <div class="{{ class }}"> {% if thumb or images %}
+          <ul class="thumbnails">
+            {% if thumb %}
+            <li><a class="thumbnail" href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
+            {% endif %}
+            {% if images %}
+            {% for image in images %}
+            <li class="image-additional"><a class="thumbnail" href="{{ image.popup }}" title="{{ heading_title }}"> <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
+            {% endfor %}
+            {% endif %}
+          </ul>
+          {% endif %}
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_description }}</a></li>
+            {% if attribute_groups %}
+            <li><a href="#tab-specification" data-toggle="tab">{{ tab_attribute }}</a></li>
+            {% endif %}
+            {% if review_status %}
+            <li><a href="#tab-review" data-toggle="tab">{{ tab_review }}</a></li>
+            {% endif %}
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-description">{{ description }}</div>
+            {% if attribute_groups %}
+            <div class="tab-pane" id="tab-specification">
+              <table class="table table-bordered">
+                {% for attribute_group in attribute_groups %}
+                <thead>
+                  <tr>
+                    <td colspan="2"><strong>{{ attribute_group.name }}</strong></td>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for attribute in attribute_group.attribute %}
+                <tr>
+                  <td>{{ attribute.name }}</td>
+                  <td>{{ attribute.text }}</td>
+                </tr>
+                {% endfor %}
+                  </tbody>
+                {% endfor %}
+              </table>
+            </div>
+            {% endif %}
+            {% if review_status %}
+            <div class="tab-pane" id="tab-review">
+              <form class="form-horizontal" id="form-review">
+                <div id="review"></div>
+                <h2>{{ text_write }}</h2>
+                {% if review_guest %}
+                <div class="form-group required">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="input-name">{{ entry_name }}</label>
+                    <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="input-review">{{ entry_review }}</label>
+                    <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
+                    <div class="help-block">{{ text_note }}</div>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <div class="col-sm-12">
+                    <label class="control-label">{{ entry_rating }}</label>
+                    &nbsp;&nbsp;&nbsp; {{ entry_bad }}&nbsp;
+                    <input type="radio" name="rating" value="1" />
+                    &nbsp;
+                    <input type="radio" name="rating" value="2" />
+                    &nbsp;
+                    <input type="radio" name="rating" value="3" />
+                    &nbsp;
+                    <input type="radio" name="rating" value="4" />
+                    &nbsp;
+                    <input type="radio" name="rating" value="5" />
+                    &nbsp;{{ entry_good }}</div>
+                </div>
+                {{ captcha }}
+                <div class="buttons clearfix">
+                  <div class="pull-right">
+                    <button type="button" id="button-review" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+                  </div>
+                </div>
+                {% else %}
+                {{ text_login }}
+                {% endif %}
+              </form>
+            </div>
+            {% endif %}</div>
+        </div>
+        {% if column_left or column_right %}
+        {% set class = 'col-sm-6' %}
+        {% else %}
+        {% set class = 'col-sm-4' %}
+        {% endif %}
+        <div class="{{ class }}">
+          <div class="btn-group">
+            <button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fa fa-exchange"></i></button>
+          </div>
+          <h1>{{ heading_title }}</h1>
+          <ul class="list-unstyled">
+            {% if manufacturer %}
+            <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
+            {% endif %}
+            <li>{{ text_model }} {{ model }}</li>
+            {% if reward %}
+            <li>{{ text_reward }} {{ reward }}</li>
+            {% endif %}
+            <li>{{ text_stock }} {{ stock }}</li>
+          </ul>
+          {% if price %}
+          <ul class="list-unstyled">
+            {% if not special %}
+            <li>
+              <h2>{{ price }}</h2>
+            </li>
+            {% else %}
+            <li><span style="text-decoration: line-through;">{{ price }}</span></li>
+            <li>
+              <h2>{{ special }}</h2>
+            </li>
+            {% endif %}
+            {% if tax %}
+            <li>{{ text_tax }} {{ tax }}</li>
+            {% endif %}
+            {% if points %}
+            <li>{{ text_points }} {{ points }}</li>
+            {% endif %}
+            {% if discounts %}
+            <li>
+              <hr>
+            </li>
+            {% for discount in discounts %}
+            <li>{{ discount.quantity }}{{ text_discount }}{{ discount.price }}</li>
+            {% endfor %}
+            {% endif %}
+          </ul>
+          {% endif %}
+          <div id="product"> {% if options %}
+            <hr>
+            <h3>{{ text_option }}</h3>
+            {% for option in options %}
+            {% if option.type == 'select' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+              <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
+                <option value="">{{ text_select }}</option>
+                {% for option_value in option.product_option_value %}
+                <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
+                {% if option_value.price %}
+                ({{ option_value.price_prefix }}{{ option_value.price }})
+                {% endif %} </option>
+                {% endfor %}
+              </select>
+            </div>
+            {% endif %}
+            {% if option.type == 'radio' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label">{{ option.name }}</label>
+              <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" />
+                    {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail" /> {% endif %}                  
+                    {{ option_value.name }}
+                    {% if option_value.price %}
+                    ({{ option_value.price_prefix }}{{ option_value.price }})
+                    {% endif %} </label>
+                </div>
+                {% endfor %} </div>
+            </div>
+            {% endif %}
+            {% if option.type == 'checkbox' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label">{{ option.name }}</label>
+              <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" />
+                    {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail" /> {% endif %}
+                    {{ option_value.name }}
+                    {% if option_value.price %}
+                    ({{ option_value.price_prefix }}{{ option_value.price }})
+                    {% endif %} </label>
+                </div>
+                {% endfor %} </div>
+            </div>
+            {% endif %}
+            {% if option.type == 'text' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+              <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control" />
+            </div>
+            {% endif %}
+            {% if option.type == 'textarea' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+              <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
+            </div>
+            {% endif %}
+            {% if option.type == 'file' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label">{{ option.name }}</label>
+              <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default btn-block"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+              <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option{{ option.product_option_id }}" />
+            </div>
+            {% endif %}
+            {% if option.type == 'date' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+              <div class="input-group date">
+                <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD" id="input-option{{ option.product_option_id }}" class="form-control" />
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                </span></div>
+            </div>
+            {% endif %}
+            {% if option.type == 'datetime' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+              <div class="input-group datetime">
+                <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-option{{ option.product_option_id }}" class="form-control" />
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span></div>
+            </div>
+            {% endif %}
+            {% if option.type == 'time' %}
+            <div class="form-group{% if option.required %} required {% endif %}">
+              <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+              <div class="input-group time">
+                <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" id="input-option{{ option.product_option_id }}" class="form-control" />
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span></div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% if recurrings %}
+            <hr>
+            <h3>{{ text_payment_recurring }}</h3>
+            <div class="form-group required">
+              <select name="recurring_id" class="form-control">
+                <option value="">{{ text_select }}</option>
+                {% for recurring in recurrings %}
+                <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
+                {% endfor %}
+              </select>
+              <div class="help-block" id="recurring-description"></div>
+            </div>
+            {% endif %}
+            <div class="form-group">
+              <label class="control-label" for="input-quantity">{{ entry_qty }}</label>
+              <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control" />
+              <input type="hidden" name="product_id" value="{{ product_id }}" />
+              <br />
+              <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
+            </div>
+            {% if minimum > 1 %}
+            <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
+            {% endif %}</div>
+          {% if review_status %}
+          <div class="rating">
+            <p>{% for i in 1..5 %}
+              {% if rating < i %}<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>{% else %}<span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>{% endif %}
+              {% endfor %} <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
+            <hr>
+            <!-- AddThis Button BEGIN -->
+            <div class="addthis_toolbox addthis_default_style" data-url="{{ share }}"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
+            <!-- AddThis Button END --> 
+          </div>
+          {% endif %} </div>
+      </div>
+      {% if products %}
+      <h3>{{ text_related }}</h3>
+      <div class="row"> {% set i = 0 %}
+        {% for product in products %}
+        {% if column_left and column_right %}
+        {% set class = 'col-xs-8 col-sm-6' %}
+        {% elseif column_left or column_right %}
+        {% set class = 'col-xs-6 col-md-4' %}
+        {% else %}
+        {% set class = 'col-xs-6 col-sm-3' %}
+        {% endif %}
+        <div class="{{ class }}">
+          <div class="product-thumb transition">
+            <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+            <div class="caption">
+              <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+              <p>{{ product.description }}</p>
+              {% if product.rating %}
+              <div class="rating"> {% for j in 1..5 %}
+                {% if product.rating < j %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span> {% endif %}
+                {% endfor %} </div>
+              {% endif %}
+              {% if product.price %}
+              <p class="price"> {% if not product.special %}
+                {{ product.price }}
+                {% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
+                {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
+              {% endif %} </div>
+            <div class="button-group">
+              <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
+              <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+              <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+            </div>
+          </div>
+        </div>
+        {% if column_left and column_right and (i + 1) % 2 == 0 %}
+        <div class="clearfix visible-md visible-sm"></div>
+        {% elseif column_left or column_right and (i + 1) % 3 == 0 %}
+        <div class="clearfix visible-md"></div>
+        {% elseif (i + 1) % 4 == 0 %}
+        <div class="clearfix visible-md"></div>
+        {% endif %}
+        {% set i = i + 1 %}
+        {% endfor %} </div>
+        {% endif %}
+        {% if tags %}
+        <p>{{ text_tags }}
+        {% for i in 0..tags|length %}
+        {% if i < (tags|length - 1) %} <a href="{{ tags[i].href }}">{{ tags[i].tag }}</a>,
+        {% else %} <a href="{{ tags[i].href }}">{{ tags[i].tag }}</a> {% endif %}
+        {% endfor %} </p>
+        {% endif %}
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div> #}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript"><!--
+$('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
+	$.ajax({
+		url: 'index.php?route=product/product/getRecurringDescription',
+		type: 'post',
+		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#recurring-description').html('');
+		},
+		success: function(json) {
+			$('.alert-dismissible, .text-danger').remove();
+
+			if (json['success']) {
+				$('#recurring-description').html(json['success']);
+			}
+		}
+	});
+});
+//--></script> 
+<script type="text/javascript"><!--
+$('#button-cart').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/cart/add',
+		type: 'post',
+		data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-cart').button('loading');
+		},
+		complete: function() {
+			$('#button-cart').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
+
+			if (json['error']) {
+				if (json['error']['option']) {
+					for (i in json['error']['option']) {
+						var element = $('#input-option' + i.replace('_', '-'));
+
+						if (element.parent().hasClass('input-group')) {
+							element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						} else {
+							element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						}
+					}
+				}
+
+				if (json['error']['recurring']) {
+					$('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
+				}
+
+				// Highlight any found errors
+				$('.text-danger').parent().addClass('has-error');
+			}
+
+			if (json['success']) {
+				$('.breadcrumb').after('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+
+				$('html, body').animate({ scrollTop: 0 }, 'slow');
+
+				$('#cart > ul').load('index.php?route=common/cart/info ul li');
+			}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+});
+//--></script> 
+<script type="text/javascript"><!--
+
+$('button[id^=\'button-upload\']').on('click', function() {
+	var node = this;
+
+	$('#form-upload').remove();
+
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	if (typeof timer != 'undefined') {
+    	clearInterval(timer);
+	}
+
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+
+			$.ajax({
+				url: 'index.php?route=tool/upload',
+				type: 'post',
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					$(node).button('loading');
+				},
+				complete: function() {
+					$(node).button('reset');
+				},
+				success: function(json) {
+					$('.text-danger').remove();
+
+					if (json['error']) {
+						$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+					}
+
+					if (json['success']) {
+						alert(json['success']);
+
+						$(node).parent().find('input').val(json['code']);
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		}
+	}, 500);
+});
+//--></script> 
+<script type="text/javascript"><!--
+$('#review').delegate('.pagination a', 'click', function(e) {
+    e.preventDefault();
+
+    $('#review').fadeOut('slow');
+
+    $('#review').load(this.href);
+
+    $('#review').fadeIn('slow');
+});
+
+$('#review').load('index.php?route=product/product/review&product_id={{ product_id }}');
+
+$('#button-review').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=product/product/write&product_id={{ product_id }}',
+		type: 'post',
+		dataType: 'json',
+		data: $("#form-review").serialize(),
+		beforeSend: function() {
+			$('#button-review').button('loading');
+		},
+		complete: function() {
+			$('#button-review').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#review').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+				$('#review').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+
+				$('input[name=\'name\']').val('');
+				$('textarea[name=\'text\']').val('');
+				$('input[name=\'rating\']:checked').prop('checked', false);
+			}
+		}
+	});
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  $('.thumbnails').magnificPopup({
+    type:'image',
+    delegate: 'a',
+    gallery: {
+      enabled: true
+    }
+  });
+});
+
+
+$(document).ready(function() {
+
+});
+//--></script> 
+{{ footer }} 

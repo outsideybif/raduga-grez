@@ -1,0 +1,238 @@
+{{ header }}
+
+
+
+
+<main-header class="main-header">
+   <div class="main-header__background"><img class="background rellax" data-scroll="" data-scroll-speed="-2" src="./catalog/view/theme/default/assets/images/main-background.png"></div>
+   <div class="toys toys_as_art">
+      <h1 class="main_title header">{{ main_title }}</h1>
+      <video autoplay="" loop="" muted="" playsinline=""><source src="{{main_video}}"></video>
+     <a class="toys__action" href="{{ main_button_link }}">
+         <circle-button class="circle-button white">
+            {{ main_button_text }}
+         </circle-button>
+      </a>
+   </div>
+</main-header>
+
+
+
+
+<main-about-us class="main-about-us block-layout">
+   <div class="main-about-us__title">{{ about_small_title }}</div>
+   <div class="main-about-us__content">
+      <div class="main-about-us__left-side">
+         <h2 class="main-about-us__subtitle first__title" data-scroll="" data-scroll-speed="1.5" data-mobile-disable="false">{{ about_title }}</h2>
+         <div class="main-about-us__text about-text-first" data-scroll="" data-scroll-speed="1.5" data-mobile-disable="false">{{ about_first_text }}</div>
+         <img data-scroll="" data-scroll-speed="1.2" class="rellax" src="/image/{{ about_left_image }}" data-mobile-disable="false">
+      </div>
+      <div class="main-about-us__center"><img src="/image/{{ about_center_image }}"></div>
+      <div class="main-about-us__right-side">
+         <img data-scroll="" data-scroll-speed="1.5" src="/image/{{ about_right_image }}" data-mobile-disable="false">
+         <div class="main-about-us__text about-text-second" data-scroll="" data-scroll-speed="1.5" data-mobile-disable="false">{{ about_second_text }}</div>
+         <a href="{{ about_button_link }}" class="dark">
+           	<circle-button class="circle-button" data-scroll="" data-scroll-speed="1.5" data-mobile-disable="false">
+            	{{ about_button_text }}
+         	</circle-button>
+        </a>
+           
+      </div>
+   </div>
+</main-about-us>
+
+
+
+
+
+
+
+{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    {{ content_top }}
+
+
+
+
+
+
+
+
+
+<main-categories class="main-categories standard-layout block-layout">
+   <div class="main-categories__wrapper">
+      <div class="main-categories__slider">
+         <div class="swiper-container swiper-container-categories swiper-container-fade swiper-container-initialized swiper-container-horizontal">
+            <div class="swiper-wrapper swiper-wrapper-categories" style="transition: all 0ms ease 0s;">
+               
+
+
+
+               {% for category in categoriesAll %}
+
+                  <div class="swiper-slide swiper-slide-categories"> 
+                     <img src="{{category.thumb}}">
+                  </div>
+
+
+               {% endfor  %}
+               
+               
+
+
+            </div>
+         </div>
+         <div class="categories-slider-navigation">
+            <div class="swiper-button-prev swiper-categories-button-prev">
+               <svg class="icon icon_stroke icon_arrow">
+                  <use xlink:href="./catalog/view/theme/default/assets/images/icons.svg#left-arrow"></use>
+               </svg>
+            </div>
+            <div class="swiper-pagination-categories"><span>6</span><span style="margin: 0 .35em;">·</span><span style="color: #838383;">6</span></div>
+            <div class="swiper-button-next swiper-categories-button-next">
+               <svg class="icon icon_stroke icon_arrow">
+                  <use xlink:href="./catalog/view/theme/default/assets/images/icons.svg#right-arrow"></use>
+               </svg>
+            </div>
+         </div>
+      </div>
+      <div class="main-categories__text">
+         <div class="main-categories__slides" data-slides>
+            
+            
+            
+            {# <div class="main-categories__slide" data-slide="" data-slide-active>
+               <div class="main-categories__subtitle" data-item="" style="">Categories</div>
+               <h3 class="main-categories__title" data-item="" style="">Arch stackers</h3>
+               <div class="main-categories__description" data-item="" style="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+               <a class="main-categories__link" href="/store.html">
+                  <circle-button class="circle-button shop-button dark" data-item="" style="">
+                     Shop
+                  </circle-button>
+               </a>
+            </div> #}
+
+            {% set index = 0 %}
+            {% for category in categoriesAll %}
+
+               {% if index == 1 %}
+               <div class="main-categories__slide" data-slide="" data-slide-active>
+               {% else %}
+               <div class="main-categories__slide" data-slide="">
+               {% endif  %}
+
+               {% set index = index + 1 %}
+
+                  <div class="main-categories__subtitle" data-item="" style="">Categories</div>
+                  <h3 class="main-categories__title" data-item="" style="">{{category.name}}</h3>
+                  <div class="main-categories__description" data-item="" style="">{{category.description}}</div>
+                  <a class="main-categories__link" href="{{category.href}}">
+                     <circle-button class="circle-button shop-button dark" data-item="" style="">
+                        Shop
+                     </circle-button>
+                  </a>
+               </div>
+
+            {% endfor %}
+            
+            
+
+
+         </div>
+      </div>
+   </div>
+</main-categories>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<main-reviews class="main-reviews standard-layout">
+   <div class="reviews-wrapper">
+      <h2 class="reviews-wrapper__title">{{review_title}}</h2>
+      <div class="reviews-wrapper__reviews-list">
+         
+         
+         {% for review in reviews %}
+            
+            <div class="review-block" animation="fade-up" animation-delay=".15">
+               <div class="review-block__content">{{review.description}}</div>
+               <div class="review-block__author">
+                  <div class="review-block__avatar"><img src="{{review.avatar}}"></div>
+                  <div>
+                     <div class="review-block__name">{{review.author}}</div>
+                     <div class="review-block__country">{{review.country}}</div>
+                  </div>
+               </div>
+            </div>
+         {% endfor %}
+
+
+      </div>
+   </div>
+   <div class="reviews-decoration">
+      <img class="first-reviews-decoration" data-scroll data-scroll-speed="1.4" src="./catalog/view/theme/default/assets/images/main-review1.png">
+      <img class="second-reviews-decoration" data-scroll data-scroll-speed="1.5" src="./catalog/view/theme/default/assets/images/main-review2.png">
+      <img class="third-reviews-decoration" data-scroll data-scroll-speed="1.3" src="./catalog/view/theme/default/assets/images/main-review3.png">
+   </div>
+</main-reviews>
+
+
+
+
+
+
+
+<main-stories class="main-stories">
+   <div class="dasha-and-una">
+      <div class="dasha-and-una__subtitle">Stories</div>
+      <h3 class="dasha-and-una-title">{{story.title}}</h3>
+
+      
+      
+      {% if story.thumb_video != "" %}
+      <video autoplay="" loop="" muted="" playsinline=""><source src="{{ story.thumb_video }}"></video>
+      {% else %}
+      <img src="./{{story.thumb}}">
+      {% endif %}
+
+      <div class="dasha-and-una__content">{{story.description}}</div>
+      <a href="{{story.href}}">
+         <circle-button class="circle-button white">
+            View more
+         </circle-button>
+      </a>
+
+   </div>
+</main-stories>
+
+
+
+
+
+
+
+
+
+
+
+
+    {{ content_bottom }}
+    {{ column_right }}
+{{ footer }}

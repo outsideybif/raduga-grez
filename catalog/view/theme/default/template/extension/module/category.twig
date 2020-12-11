@@ -1,0 +1,30 @@
+<catalogue-list class="catalogue-list">
+              
+    <div class="catalogue-list__wrapper">
+        
+      <div class="catalogue-list__title">Category</div>
+      <div class="catalogue-list__separator"></div>
+
+        {% for category in categoriesAll %}
+          <a href="{{ category.href }}"><div class="catalogue-list__item">{{ category.name }}</div></a>
+        {% endfor %}
+
+
+    </div>
+
+
+    <div class="catalogue-list__wrapper">
+      <div class="catalogue-list__title">Collection</div>
+      <div class="catalogue-list__separator"></div>
+      {% for category in categoriesCollection %}
+        <a href="{{ category.href }}"><div class="catalogue-list__item">{{ category.name }}</div></a>
+      {% endfor %}              
+    </div>
+
+    <div class="catalogue-list__wrapper">
+      <a href="{{ categoriesShop }}"><div class="catalogue-list__title">Shop All</div></a>
+    </div>
+
+
+
+</catalogue-list>

@@ -1,0 +1,70 @@
+{{ header }}
+
+<stokiest-details class="stokiest-details block-layout-navigation standard-layout">
+    <div class="stokiest-details__header">
+        <div class="title-medium">Stockist</div>
+        <p class="stokiest-details__information-description">You don’t need to wait for the delivery from Russia, you can buy our toys in the shops of your own country. We regularly update this list, so check and look through it from time to time. If you’re interested in wholesale, you can find the information here.</p>
+    </div>
+    <div class="stokiest-details__body">
+        <div class="stokiest-details__title">
+            <div class="stokiest-details__stokiests-title">Select your region</div>
+            <div class="stokiest-details__stokiests">
+
+                {% set index = 0 %}
+                {% for country in countries %}
+                    
+                    <div class="stokiest-details__stokiest-item  {% if index == 0 %} active  {% endif %}" style="opacity:0" animation="fade" animation-delay="0" data-name="{{country.name_id}}">{{country.name}}</div>
+                    {% set index = index + 1 %}
+                {% endfor %} 
+            </div>
+       
+        </div>
+        <div class="stokiest-details__infromations">
+            <div class="stokiest-details__infromations-back"> 
+                <img class="stokiest-details__back-icon" src="./assets/images/arrow-left-dark.svg" alt="" role="presentation">
+                <span>Back to regions</span>
+            </div>
+            
+            
+            
+            {% set index = 0 %}
+            {% for item in items %}
+            {% set anumationIndex = 0 %}
+                <div class="stokiest-details__store-items-wrapper {% if index == 0 %} active {% endif %}" id="{{item.name_id}}-items">
+                {% set index = index + 1 %}
+                    {% for wrapper in item.items %}
+                        <div class="stokiest-details__store-items" animation="fade" >
+                            {% for itemInfo in wrapper %}
+                                {% set anumationIndex = anumationIndex + 1 %}
+                                <a class="stokiest-details__store-item dark" style="opacity:0" animation="fade" animation-delay="{{anumationIndex/25}}" href="{{itemInfo.link}}" target="_blank">{{itemInfo.name}}</a>
+                            {% endfor %} 
+                        </div>
+                    {% endfor %} 
+
+                </div>
+            {% endfor %} 
+            
+
+            
+        </div>
+    </div>
+</stokiest-details>
+
+
+<script>
+
+
+
+{# document.addEventListener("DOMContentLoaded", ()=>{
+
+    console.log($(".stokiest-details__store-items-wrapper").last());
+    console.log($(".stokiest-details__store-items-wrapper").last().innerHeight());
+    let heightForBottom = $(".stokiest-details__store-items-wrapper").last().height();
+    heightForBottom += 120;
+    $(".stokiest-details").css("padding-bottom", `${heightForBottom}px`);
+
+}); #}
+
+</script>
+    
+{{ footer }}

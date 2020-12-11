@@ -1,0 +1,123 @@
+{# {% if error_warning %}
+<div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+{% endif %}
+{% if shipping_methods %}
+<div class="checkout-form__title">Shipping methods</div>
+{% for shipping_method in shipping_methods %}
+<p><strong>{{ shipping_method.title }}</strong></p>
+{% if not shipping_method.error %}
+{% for quote in shipping_method.quote %}
+<div class="radio">
+  <label> {% if quote.code == code or not code %}
+    {% set code = quote.code %}
+    <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
+    {% else %}
+    <input type="radio" name="shipping_method" value="{{ quote.code }}" />
+    {% endif %}
+    {{ quote.title }} - {{ quote.text }}</label>
+</div>
+{% endfor %}
+{% else %}
+<div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+<p><strong>{{ text_comments }}</strong></p>
+<p>
+  <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
+</p>
+<div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="{{ button_continue }}" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+</div>
+
+
+<script>
+
+setTimeout(()=>{
+window.locomotive.update();
+console.log("update shipping");
+},3000);
+
+
+</script> #}
+
+
+
+
+
+
+
+{% if error_warning %}
+<div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+{% endif %}
+{% if shipping_methods %}
+<div class="checkout-form__title">Shipping methods</div>
+{% for shipping_method in shipping_methods %}
+
+{% if not shipping_method.error %}
+{% for quote in shipping_method.quote %}
+<div class="radio shipping_radiobutton">
+  <label> {% if quote.code == code or not code %}
+    {% set code = quote.code %}
+    <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
+    {% else %}
+    <input type="radio" name="shipping_method" value="{{ quote.code }}" />
+    {% endif %}
+
+    <div class="shipping_label"><span>{{ quote.title }}</span> <span>{{ quote.text }}</span></div>
+    
+    </label>
+</div>
+{% endfor %}
+{% else %}
+<div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+<textarea name="comment" rows="8" style="display: none">{{ comment }}</textarea>
+
+
+<div class="checkout-form__actions">
+    <div class="checkout-form__action-wrapper back-to-informations">
+      <div class="">Back</div>
+    </div>
+    <div class="checkout-form__action-wrapper">
+      <standart-button class="standart-button continue-payment-button mobile_full disabled" id="button-shipping-method" data-loading-text="{{ text_loading }}">
+          <span id="button-information-wrapper">Continue to Payment<span>
+          <div style="display: none"  id="button-loading-wrapper" class="dot-flashing"></div>
+      </standart-button>
+    </div>
+</div>
+
+ 
+
+
+{# <div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="{{ button_continue }}" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+</div> #}
+
+
+<script>
+
+
+
+$(".shipping_radiobutton input").on("change", ()=>{
+  console.log("chnage");
+  $("#button-shipping-method").removeClass("disabled");
+})
+
+
+
+
+setTimeout(()=>{
+window.locomotive.update();
+console.log("update shipping");
+},3000);
+
+
+</script>

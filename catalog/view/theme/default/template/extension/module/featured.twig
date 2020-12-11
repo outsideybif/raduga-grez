@@ -1,0 +1,158 @@
+
+
+<main-toy-to-spend class="main-toy-to-spend standard-layout block-layout">
+   <h3 class="main-toy-to-spend__title">{{spend_title}}</h3>
+   
+   <div class="main-toy-to-spend__products">
+      
+      
+      <product-card class="product-card big" data-link="{{ firstProduct.href }}">
+         
+          {% if firstProduct.video == "" %}
+            <img src="{{ firstProduct.thumb }}">
+          
+          {% else %}
+
+          <video class="media" autoplay="" loop="" muted="" playsinline=""><source src="{{ firstProduct.video }}"></video>
+
+          {% endif %}
+                  
+
+         <div class="product-card__information">
+            <a class="product-card__link-card" href="{{ firstProduct.href }}"></a>
+            
+            <div class="product-card__top-link">
+              <a href="{{ firstProduct.category_link }}"><div class="product-card__category">{{ firstProduct.category_name }}</div></a>
+            </div>
+
+            <div class="product-card__top-link">
+                <a href="{{ firstProduct.href }}" class="product-card__title">{{ firstProduct.name }}</a>
+               <div class="product-card__price">{{ firstProduct.price }}</div>
+               <div class="product-card__add-to-card white underline" onclick="cart.add('{{ firstProduct.product_id }}', '{{ firstProduct.minimum }}');">Add to cart</div>
+            </div>
+
+         </div>
+      </product-card>
+
+
+      <div class="main-toy-to-spend__product-grid">
+         <div>
+
+            {% for product in productsTop %}
+            
+              <product-card class="product-card home" data-link="{{ product.href }}">
+                
+                {% if product.video == "" %}
+                  <img src="{{ product.thumb }}">
+                
+                {% else %}
+
+                <video class="media" autoplay="" loop="" muted="" playsinline=""><source src="{{ product.video }}"></video>
+
+                {% endif %}
+                  
+
+
+
+
+                <div class="product-card__information">
+                  <a class="product-card__link-card" href="{{ firstProduct.href }}"></a>
+                  <div class="product-card__top-link">
+                      <a href="{{ product.category_link }}"><div class="product-card__category">{{ product.category_name }}</div></a>
+                  </div>
+                  <div class="product-card__top-link">
+                      <a href="{{ product.href }}" class="product-card__title">{{ product.name }}</a>
+                    <div class="product-card__price">{{ product.price }}</div>
+                    <div class="product-card__add-to-card white underline" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');">Add to cart</div>
+                  </div>
+                </div>
+              </product-card>
+            {% endfor %}
+            
+         </div>
+         <div>
+
+            {% for product in productsBottom %}
+            
+              <product-card class="product-card home" data-link="{{ product.href }}">
+                
+                {% if product.video == "" %}
+                  <img src="{{ product.thumb }}">
+                
+                {% else %}
+
+                <video class="media" autoplay="" loop="" muted="" playsinline=""><source src="{{ product.video }}"></video>
+
+                {% endif %}
+                
+
+
+
+
+
+                <div class="product-card__information">
+                  <a class="product-card__link-card" href="{{ firstProduct.href }}"></a>
+                  <div class="product-card__top-link">
+                    <a href="{{ product.category_link }}"><div class="product-card__category">{{ product.category_name }}</div></a>
+                  </div>
+                  <div class="product-card__top-link">
+                      <a href="{{ product.href }}" class="product-card__title">{{ product.name }}</a>
+                    <div class="product-card__price">{{ product.price }}</div>
+                    <div class="product-card__add-to-card white underline" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');">Add to cart</div>
+                  </div>
+                </div>
+              </product-card>
+            {% endfor %}
+            
+         </div>
+      </div>
+   </div>
+</main-toy-to-spend>
+
+  
+
+
+
+
+{# 
+
+<h3>{{ heading_title }}</h3>
+ {% for product in products %}
+  <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="product-thumb transition">
+      <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+      <div class="caption">
+        <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+        <p>{{ product.description }}</p>
+        {% if product.rating %}
+        <div class="rating">
+          {% for i in 5 %}
+          {% if product.rating < i %}
+          <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+          {% else %}
+          <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% if product.price %}
+        <p class="price">
+          {% if not product.special %}
+          {{ product.price }}
+          {% else %}
+          <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+          {% endif %}
+          {% if product.tax %}
+          <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+          {% endif %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="button-group">
+        <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+      </div>
+    </div>
+  </div>
+  {% endfor %} #}

@@ -1,0 +1,574 @@
+
+            {{ yandex_metrika_html_code }}
+            <script type="text/javascript">
+                window.dataLayer = window.dataLayer || [];
+                function sendEcommerceAdd(id, quantity) {
+                   $.ajax({
+                        url: 'index.php?route=extension/payment/yandex_money/productInfo',
+                        type: 'post',
+                        data: 'id=' + id,
+                        dataType: 'json',
+                        success: function(json) {
+                            json.quantity = quantity;
+                            dataLayer.push({ecommerce: {add: {products: [json]}}});
+                        }
+                    });
+                }
+                $(window).on("load", function () {
+                    var opencartCartAdd = cart.add;
+                    cart.add = function (product_id, quantity) {
+                        opencartCartAdd(product_id, quantity);
+                        sendEcommerceAdd(product_id, typeof(quantity) !== 'undefined' ? parseInt(quantity) : 1);
+                    };
+
+                    $('#button-cart').on('click', function() {
+                        var ecommerce_product = new Array();
+                        sendEcommerceAdd($('#product input[name="product_id"]').val(), parseInt($('#product input[name="quantity"]').val()));
+                    });
+                });
+            </script>
+            
+{# <footer>
+  <div class="container">
+    <div class="row">
+      {% if informations %}
+      <div class="col-sm-3">
+        <h5>{{ text_information }}</h5>
+        <ul class="list-unstyled">
+         {% for information in informations %}
+          <li><a href="{{ information.href }}">{{ information.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="col-sm-3">
+        <h5>{{ text_service }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+          <li><a href="{{ return }}">{{ text_return }}</a></li>
+          <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>{{ text_extra }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
+          <li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
+          <li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
+          <li><a href="{{ special }}">{{ text_special }}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>{{ text_account }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ account }}">{{ text_account }}</a></li>
+          <li><a href="{{ order }}">{{ text_order }}</a></li>
+          <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+          <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <p>{{ powered }}</p>
+
+            {% if yandex_money_kassa_show_in_footer is defined and yandex_money_kassa_show_in_footer %}
+            <p><a href="https://kassa.yandex.ru/?_openstat=promo;merchants;opencart2">Работает Яндекс.Касса</a></p>
+            {% endif %}
+            
+  </div>
+</footer> #}
+
+<contact-us class="contact-us">
+   <img src="./catalog/view/theme/default/assets/images/1_1.png">
+   <div class="contact-us__form">
+      <div class="contact-us__title">
+         <div>JOIN OUR</div>
+         <div>NEWSLETTER</div>
+      </div>
+      <div class="contact-us__field">
+         <input-subscribe class="input-subscribe" validation="email">
+            <input class="input-subscribe__input" type="text" name="email" placeholder="email">
+            <div class="input-subscribe__error">Not error</div>
+            <div class="input-subscribe__arrow"><img src="./catalog/view/theme/default/assets/images/arrow-right.svg"></div>
+         </input-subscribe>
+      </div>
+   </div>
+</contact-us>
+
+            {{ yandex_metrika_html_code }}
+            <script type="text/javascript">
+                window.dataLayer = window.dataLayer || [];
+                function sendEcommerceAdd(id, quantity) {
+                   $.ajax({
+                        url: 'index.php?route=extension/payment/yandex_money/productInfo',
+                        type: 'post',
+                        data: 'id=' + id,
+                        dataType: 'json',
+                        success: function(json) {
+                            json.quantity = quantity;
+                            dataLayer.push({ecommerce: {add: {products: [json]}}});
+                        }
+                    });
+                }
+                $(window).on("load", function () {
+                    var opencartCartAdd = cart.add;
+                    cart.add = function (product_id, quantity) {
+                        opencartCartAdd(product_id, quantity);
+                        sendEcommerceAdd(product_id, typeof(quantity) !== 'undefined' ? parseInt(quantity) : 1);
+                    };
+
+                    $('#button-cart').on('click', function() {
+                        var ecommerce_product = new Array();
+                        sendEcommerceAdd($('#product input[name="product_id"]').val(), parseInt($('#product input[name="quantity"]').val()));
+                    });
+                });
+            </script>
+            
+   <footer-block class="footer-block standard-layout">
+      <div class="footer-block__navigation">
+         <div class="footer-block__email">
+            <div class="footer-block__menu-list-title">Interested in a Raduga Grëz?</div>
+            <div class="footer-block__email-text">hello@raduga-grez.ru</div>
+         </div>
+         <div class="footer-block__menu">
+            <div class="footer-block__menu-block">
+               <div class="footer-block__menu-list">
+                  <div class="footer-block__menu-list-title">About</div>
+                  <a class="footer-block__menu-item" href="./about.html">About us</a><a class="footer-block__menu-item" href="./stories.html">Stories</a>
+               </div>
+               <div class="footer-block__menu-list">
+                  <div class="footer-block__menu-list-title">Customer Service</div>
+                  <a class="footer-block__menu-item" href="./shipping.html">Shipping</a><a class="footer-block__menu-item" href="./wholesale.html">Wholesale</a><a class="footer-block__menu-item" href="./contact.html">Terms &amp; Conditions</a><a class="footer-block__menu-item" href="./faq.html">FAQ</a>
+               </div>
+            </div>
+            <div class="footer-block__menu-block">
+               <div class="footer-block__menu-list">
+                  <div class="footer-block__menu-list-title">Contact</div>
+                  <a class="footer-block__menu-item" href="./contact.html">Contact us</a><a class="footer-block__menu-item" href="./stockist.html">Stockist</a>
+               </div>
+               <div class="footer-block__menu-list">
+                  <div class="footer-block__menu-list-title">Social media</div>
+                  <a class="footer-block__menu-item" href="https://www.instagram.com/raduga_grez/" target="_blank">Instagram</a><a class="footer-block__menu-item" href="https://www.facebook.com/raduga.grez" target="_blank">Facebook</a><a class="footer-block__menu-item" href="https://www.pinterest.com/radugagrez/" target="_blank">Pinterest</a>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="footer-block__back-to-top underline">Back to Top</div>
+      <div class="footer-block__copyright">©2020 All rights reserved RADUGA GRËZ</div>
+   </footer-block>
+
+
+
+
+
+
+
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</plm-smooth-scroll>
+
+<script>
+   var ViewportHeight = window.innerHeight;
+
+   var IsAboutInViewport = false;
+
+   var startTop = 0;
+
+
+
+   document.addEventListener("DOMContentLoaded", ()=>{
+    //console.log(window.locomotive);
+
+    //scroll.scrollTo(target);
+
+    $(".footer-block__back-to-top").on("click", ()=>{
+      window.locomotive.scrollTo("top");
+    });
+
+  });
+
+   document.addEventListener("DOMContentLoaded", ()=>{
+      window.locomotive.on('scroll', obj => {
+
+         let scrollTop = obj.scroll.y;
+         if(IsAboutInViewport){
+
+            console.log(startTop);
+            console.log(startTopPart);
+            console.log("-=-=-=-=-=-=-=-=-=-=-=-=-=");
+
+            let heightDifference =  (startTop - ( $(".contact-us").offset().top + $(".contact-us").outerHeight() )) / startTopPart;
+            let scale = 1 + 0.004 * heightDifference;
+            
+            $('.about-us-image').css('transform', 'scale(' + scale + ')');
+         }
+           
+      });
+
+
+      window.locomotive.on('call', func => {
+         if($(".contact-us").hasClass("is-inview")){
+            IsAboutInViewport = true;
+            startTop = $(".contact-us").offset().top + $(".contact-us").outerHeight();
+            startTopPart = $(".contact-us").offset().top / 100;
+         } else {
+            IsAboutInViewport = false;
+         }
+         
+      });
+
+
+
+    });
+
+    function contactUsFunc(){
+       //console.log("contactUsFunc2");
+    }
+
+</script>
+
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+
+
+
+
+
+
+
+
+<script>
+
+
+   $.expr[':'].internal = function (obj) {
+      return (obj.hostname == location.hostname)
+   }
+
+   $.expr[':'].external = function (obj) {
+      return (obj.hostname != location.hostname)
+   }
+
+
+   window.onpopstate = function(event) {
+
+       let link = document.location.href;
+
+      if(link.charAt(0) == "#"){
+         return true;
+      }
+
+     console.log(link);
+      if(link != "./" && link != "/"){
+         window.navigationBackgroundScrollTop = 200;
+         console.log( "set "+window.navigationBackgroundScrollTop );
+         var url = new URL(link);
+         if(url.searchParams.get("route") == "checkout/checkout"){
+            $("navigation-block").css("opacity", 0);
+            $("navigation-block").css("z-index", -10);
+
+            $(".floating-cart").removeClass("opened");
+            $(".floating-cart").removeClass("showed");
+         } else {
+            $("navigation-block").css("opacity", 1);
+            $("navigation-block").css("z-index", 9);
+
+         }
+      } else {
+         $("navigation-block").css("opacity", 1);
+         $("navigation-block").css("z-index", 9);
+         
+         window.navigationBackgroundScrollTop = window.innerHeight;
+
+         console.log( window.navigationBackgroundScrollTop );
+      }
+      
+      
+
+
+
+
+      $('#root').animate({"opacity":"0"}, 200, ()=>{
+         $.get(link, function (data) {
+            // console.log(data)
+
+            let headStart = data.indexOf('<head')
+            headStart = data.indexOf('>', headStart) + 1
+            let headEnd = data.indexOf('</head>', headStart)
+
+            let bodyStart = data.indexOf('<body')
+            bodyStart = data.indexOf('>', bodyStart) + 1
+            let bodyEnd = data.indexOf('</body>', bodyStart)
+
+
+            let head = data.slice(headStart, headEnd)
+            let body = data.slice(bodyStart, bodyEnd)
+
+            const root = $(body).find('#root')
+            $('#root').html(root.html())
+            window.locomotive.destroy()
+            window.locomotive.init()
+
+            var url_string = link;
+            
+            if(url_string == "./" || link == "/"){
+               history.pushState({page: 1}, "title 1", "")
+            } else {
+               var url = new URL(url_string);
+               history.pushState({page: 1}, "title 1", url.pathname + url.search)
+            }
+            
+               let countOfImages = $("img").length;
+            let countOfLoadedImages = 0;
+
+            let countOfVideos = $("video").length;
+            let countOfLoadedVideos = 0;
+
+
+
+            $("img").on("load", function() {
+               countOfLoadedImages++;
+               if(countOfImages == countOfLoadedImages && 
+               countOfVideos == countOfLoadedVideos){
+                  setTimeout(() => {
+                     $('#root').animate({"opacity":"1"}, 400);
+                  }, 300)
+               }
+            });
+
+            $("video").on("loadeddata", function() {
+               countOfLoadedVideos++;
+               if(countOfImages == countOfLoadedImages && 
+               countOfVideos == countOfLoadedVideos){
+                  setTimeout(() => {
+                     $('#root').animate({"opacity":"1"}, 400);
+                  }, 300)
+               }
+            });
+
+
+
+
+
+            setTimeout(() => {
+               $('#root').animate({"opacity":"1"}, 200);
+
+               $("floating-menu ").removeClass("opened");
+
+               
+
+
+
+               
+               window.locomotive.update()
+               document.dispatchEvent(new CustomEvent('loadingscreendone'))
+               window.document.dispatchEvent(new Event("DOMContentLoaded", {
+                  bubbles: true,
+                  cancelable: true
+               }));
+            }, 200)
+
+            setTimeout(() => {
+               window.locomotive.update()
+            }, 1000)
+            setTimeout(() => {
+               window.locomotive.update()
+            }, 2000)
+         })
+      });
+
+
+   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   $(document).on('click', 'a:internal', ajaxLinkHandler)
+
+
+   function ajaxLinkHandler(e) {
+      e.preventDefault()
+      
+      if(typeof $(this).data('disabled') !== 'undefined'){
+          return false;
+      }
+
+      let link = $(this).attr("href");
+      
+
+      if($(this).attr("href").charAt(0) == "#"){
+         return true;
+      }
+      if(link != "./" && link != "/"){
+         var url = new URL(link);
+         if(url.searchParams.get("route") == "checkout/checkout"){
+            $("navigation-block").css("opacity", 0);
+            $("navigation-block").css("z-index", -10);
+
+            $(".floating-cart").removeClass("opened");
+            $(".floating-cart").removeClass("showed");
+         } else {
+            $("navigation-block").css("opacity", 1);
+            $("navigation-block").css("z-index", 9);
+
+         }
+      } else {
+         $("navigation-block").css("opacity", 1);
+         $("navigation-block").css("z-index", 9);
+      }
+      
+      
+      $('#root').animate({"opacity":"0"}, 200, ()=>{
+         $.get($(this).attr("href"), function (data) {
+            // console.log(data)
+            let headStart = data.indexOf('<head')
+            headStart = data.indexOf('>', headStart) + 1
+            let headEnd = data.indexOf('</head>', headStart)
+
+            let bodyStart = data.indexOf('<body')
+            bodyStart = data.indexOf('>', bodyStart) + 1
+            let bodyEnd = data.indexOf('</body>', bodyStart)
+
+
+            let head = data.slice(headStart, headEnd)
+            let body = data.slice(bodyStart, bodyEnd)
+            const root = $(body).find('#root')
+            $('#root').html(root.html())
+            window.locomotive.destroy()
+            window.locomotive.init()
+            var url_string = link;
+            
+            if(url_string == "./" || link == "/"){
+               history.pushState({page: 1}, "title 1", "")
+            } else {
+               var url = new URL(url_string);
+               history.pushState({page: 1}, "title 1", url.pathname + url.search)
+            }
+            
+
+
+         
+               let countOfImages = $("img").length;
+            let countOfLoadedImages = 0;
+
+            let countOfVideos = $("video").length;
+            let countOfLoadedVideos = 0;
+
+
+
+            $("img").on("load", function() {
+               countOfLoadedImages++;
+               if(countOfImages == countOfLoadedImages && 
+               countOfVideos == countOfLoadedVideos){
+                  setTimeout(() => {
+                     $('#root').animate({"opacity":"1"}, 400);
+                  }, 300)
+               }
+            });
+
+            $("video").on("loadeddata", function() {
+               countOfLoadedVideos++;
+               if(countOfImages == countOfLoadedImages && 
+               countOfVideos == countOfLoadedVideos){
+                  setTimeout(() => {
+                     $('#root').animate({"opacity":"1"}, 400);
+                  }, 300)
+               }
+            });
+
+
+
+
+
+            setTimeout(() => {
+               $('#root').animate({"opacity":"1"}, 200);
+
+               $("floating-menu ").removeClass("opened");
+
+               
+
+
+
+               
+               window.locomotive.update()
+               document.dispatchEvent(new CustomEvent('loadingscreendone'))
+               window.document.dispatchEvent(new Event("DOMContentLoaded", {
+                  bubbles: true,
+                  cancelable: true
+               }));
+            }, 200)
+
+            setTimeout(() => {
+               window.locomotive.update()
+            }, 1000)
+            setTimeout(() => {
+               window.locomotive.update()
+            }, 2000)
+         })
+      });
+      // $('html').load($(this).attr('href'))
+      
+         
+
+
+         return false
+      }
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+<script>const modernBrowser = (
+  'IntersectionObserver' in window
+  &&
+  'customElements' in window
+);
+
+if ( !modernBrowser ) {
+  const scriptElement = document.createElement('script');
+
+  scriptElement.async = false;
+  scriptElement.src = './dist/polyfills.bundle.js';
+  document.body.appendChild(scriptElement);
+}
+</script>
+<script src="./catalog/view/dist/index.bundle.js?ver={{version}}"></script>
+
+<!--
+OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
+Please donate via PayPal to donate@opencart.com
+//-->
+</body></html>

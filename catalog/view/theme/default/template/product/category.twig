@@ -1,0 +1,342 @@
+{{ header }}
+
+
+
+
+
+
+
+      <product-catalog class="product-catalog standard-layout">
+        <div class="product-catalog__filter">
+          <catalogue-list class="catalogue-list">
+               {% set timeCategory = 0.05 %}
+              <div class="catalogue-list__wrapper">
+                 
+                <div class="catalogue-list__title" style="opacity:0" animation="fade" animation-delay="{{timeCategory}}">Category</div>
+                <div class="catalogue-list__separator" style="opacity:0" animation="fade" animation-delay="{{timeCategory}}"></div>
+                 {% set timeCategory = timeCategory + 0.05 %}
+                  {% for category in categoriesAll %}
+                    {% set timeCategory = timeCategory + 0.05 %}
+                    
+                      <a href="https://radugagrez.palemiya.com/index.php?route=product/category&path={{category.category_id}}" data-disabled data-category="{{category.category_id}}" 
+                      class="catalogue-list__item {% if active_category_id == category.category_id %} active {% endif %}" 
+                      style="opacity:0" animation="fade" animation-delay="{{timeCategory}}">{{ category.name }}</a>
+                    
+
+                  {% endfor %}
+
+
+              </div>
+
+
+              <div class="catalogue-list__wrapper">
+                <div class="catalogue-list__title" style="opacity:0" animation="fade" animation-delay="{{timeCategory}}">Collection</div>
+                <div class="catalogue-list__separator"  style="opacity:0" animation="fade" animation-delay="{{timeCategory}}"></div>
+                {% for category in categoriesCollection %}
+                  {% set timeCategory = timeCategory + 0.05 %}
+                    <a href="https://radugagrez.palemiya.com/index.php?route=product/category&path={{category.category_id}}" data-disabled data-category="{{category.category_id}}" 
+                    style="opacity:0" class="catalogue-list__item {% if active_category_id == category.category_id %} active {% endif %}" 
+                    animation="fade" animation-delay="{{timeCategory}}">{{ category.name }}</diфv>
+                  
+                {% endfor %}              
+              </div>
+              {% set timeCategory = timeCategory + 0.05 %}
+              <div class="catalogue-list__wrapper">
+              
+               <a href="https://radugagrez.palemiya.com/index.php?route=product/category&path=79"  data-disabled data-category="79" class="catalogue-list__title dark" 
+               style="opacity:0" animation="fade" animation-delay="{{timeCategory}}">Shop All</a>
+                
+              </div>
+
+
+
+          </catalogue-list>
+        </div>
+        <mobile-products-actions class="mobile-products-actions">
+          <div class="mobile-products-actions__back-action">
+              <img class="mobile-products-actions__back-icon" src="./catalog/view/theme/default/assets/images/arrow-left-dark.svg" alt="" role="presentation">
+              {% if active_category_id == 79 %}
+                <div class="mobile-products-actions__back-label">Catalogue menu</div>
+              {% else %}
+                <div class="mobile-products-actions__back-label">Back to catalogue menu</div>
+              {% endif %}
+              
+
+          </div>
+          <div class="mobile-products-actions__title">{{active_category.name}}</div>
+        </mobile-products-actions>
+      
+
+          <span class="product-catalog__products-wrapper" style="width: 100%">
+          
+            
+          
+          
+            {% set time = 0.15 %}
+            <products-wrapper class="products-wrapper products">
+            {% for product in products %}
+              
+              {% set time = time + 0.15 %}
+              
+                {# style="opacity: 0" #}
+                <product-card class="product-card" data-link="{{ product.href }}" style="opacity: 0" >
+                  {% if product.video == "" %}
+                  <img src="{{ product.thumb }}">
+                  {% else %}
+                  <video class="media" autoplay="" loop="" muted="" playsinline=""><source src="{{ product.video }}"></video>
+                  {% endif %}
+                  <div class="product-card__information">
+                    <a class="product-card__link-card" href="{{ product.href }}"></a>
+                    <div class="product-card__top-link">
+                      {% if active_category_id == 79 %}
+                      <a href="{{ product.category_link }}"><div class="product-card__category">{{ product.category_name }}</div></a>
+                      {% endif %}
+                    </div>
+                    <div class="product-card__top-link">
+                      <a href="{{ product.href }}" class="product-card__title">{{ product.name }}</a>
+                      <div class="product-card__price">{{ product.price }}</div>
+                      {% if product.quantity == 0 %}
+                        <br>
+                        <div>Out of the stock</div>
+                      {% else %}
+                        <div class="product-card__add-to-card underline" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');">Add to cart</div>
+                      {% endif %}
+                    </div>
+
+
+                  </div>
+                </product-card>
+                
+              
+            {% endfor %} 
+          </products-wrapper>
+
+          <div class="loading-wrapper" style="opacity:0">
+            <div class="loading-wrapper__wrapper">
+            
+            </div>
+          </div>
+
+
+        </span>
+    </product-catalog>
+{#         
+        <div class="product-layout product-list col-xs-12">
+          <div class="product-thumb">
+            <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+            <div>
+              <div class="caption">
+                <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+                <p>{{ product.description }}</p>
+                {% if product.price %}
+                <p class="price"> {% if not product.special %}
+                  {{ product.price }}
+                  {% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
+                  {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
+                {% endif %}
+                {% if product.rating %}
+                <div class="rating"> {% for i in 1..5 %}
+                  {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>{% endif %}
+                  {% endfor %} </div>
+                {% endif %} </div>
+              <div class="button-group">
+                <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+              </div>
+            </div>
+          </div>
+        </div> #}
+
+
+
+    <script>
+      let page = 1;
+      let isLoaded = false;
+      var intViewportHeight = window.innerHeight;
+      var halfViewportHeight = window.innerHeight / 2;
+      var category_id = {{category_id}};
+      var isCategoryLoading = false;
+
+      $(window).scroll(function() {
+          //console.log(`${$(window).scrollTop() + $(window).height()} > ${$(".products").offset().top + $(".products").outerHeight()}`);
+          
+      });
+
+
+
+  $(".catalogue-list__title").on("click", function(){
+    category_id = $(this).data("category");
+    console.log(category_id);
+    ReloadCategory();
+  });
+
+  $(".catalogue-list__item").on("click", function(){
+    category_id = $(this).data("category");
+    console.log(category_id);
+    ReloadCategory();
+
+    //$()
+  })
+
+  
+
+
+  function ReloadCategory(){
+    page = 1;
+    
+    if(isCategoryLoading == false){
+      isCategoryLoading = true;
+
+      $.ajax({
+        url: 'index.php?route=product/category/loadMore',
+        type: 'get',
+        data: `category_id=${category_id}&page=${page}`,
+        dataType: 'json',
+        success: function(json) {
+          page++;
+          
+          if(Array.isArray(json["products"])){
+            
+            let newProductsBuffer = "";
+            json["products"].forEach(product => {
+                newProductsBuffer += `<product-card data-id="test" data-load="reload" class="product-card" style="opacity:0">
+                    <img src="${ product.thumb }">
+                    <div class="product-card__information">
+                      <div class="product-card__top-link">
+                        <a class="product-card__link-card" href="${ product.href }"></a>
+                        {% if active_category_id == 79 %}
+                        <a href="${ product.category_link }"><div class="product-card__category">${ product.category_name }</div></a>
+                        {% endif %}
+                      </div>
+                      <div class="product-card__top-link">
+                        <a href="${ product.href }"><div class="product-card__title">${ product.name }</div></a>
+                        <div class="product-card__price">${ product.price }</div>
+                        <div class="product-card__add-to-card underline" onclick="cart.add('${ product.product_id }', '${ product.minimum }');">Add to cart</div>
+                      </div>
+                    </div>
+                  </product-card>`;
+              });
+              
+              let wrapper = document.querySelector('products-wrapper');
+              wrapper.childrenLength = 0;
+              $(".products").html(newProductsBuffer);
+              setTimeout(
+                            ()=>{
+                              window.locomotive.update();
+                              window.updateTimeline();
+                            }, 200);
+              
+              
+          } else {
+              $(".products").html("<h1>Category is empty<h1>");
+          }
+          //isLoaded = false;
+          isCategoryLoading = false;
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+          console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
+
+
+
+    }
+  }
+
+      
+  document.addEventListener("DOMContentLoaded", ()=>{
+    
+    window.locomotive.on('scroll', obj => {
+        let scrollTop = obj.scroll.y;
+
+
+      //console.log(`${scrollTop}  >  ${ $(".products").outerHeight() - halfViewportHeight}`);
+
+
+        //if(scrollTop + $(window).height() >  $(".products").offset().top + $(".products").outerHeight()) {
+        if(scrollTop >  $(".products").outerHeight() - halfViewportHeight ) {
+          
+            if(isLoaded == false && isCategoryLoading == false){
+              isLoaded = true;
+              $.ajax({
+                url: 'index.php?route=product/category/loadMore',
+                type: 'get',
+                data: `category_id=${category_id}&page=${page}`,
+                dataType: 'json',
+                beforeSend: function() {
+                  //$('#cart > button').button('loading');
+                },
+                complete: function() {
+                  //$('#cart > button').button('reset');
+                },
+                success: function(json) {
+                  
+                  
+                    page++;
+                    if(Array.isArray(json["products"])){
+                     
+
+                          let wrapper = document.querySelector('products-wrapper');
+                          //wrapper.childrenLength = 0;
+                          let productsBuffer = "";
+                          json["products"].forEach(product => {
+                            productsBuffer += `<product-card data-id="test" data-load="scroll" class="product-card" style="opacity:0">
+                                <img src="${ product.thumb }">
+                                <div class="product-card__information">
+                                  <div>
+                                    {% if active_category_id == 79 %}
+                                    <a href="${ product.category_link }"><div class="product-card__category">${ product.category_name }</div></a>
+                                    {% endif %}
+                                  </div>
+                                  <div>
+                                    <a href="${ product.href }"><div class="product-card__title">${ product.name }</div></a>
+                                    <div class="product-card__price">${ product.price }</div>
+                                    <div class="product-card__add-to-card underline" onclick="cart.add('${ product.product_id }', '${ product.minimum }');">Add to cart</div>
+                                  </div>
+                                </div>
+                              </product-card>`;
+                              
+                          });
+                          $(".products").append(productsBuffer);
+                          window.locomotive.update();
+                          isLoaded = false;
+                          setTimeout(
+                            ()=>{
+                              window.locomotive.update();
+                              window.updateTimeline();
+                            }, 200);
+
+                         
+                    }
+                  
+                  
+                  
+
+
+                  //let DOM = {main: document.querySelector('plm-smooth-scroll')};
+        
+                  //DOM.scrollable = DOM.main.querySelector('div[data-scroll]');
+                  //document.body.style.height = `${DOM.scrollable.scrollHeight}px`;
+
+                  
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                  console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+              });
+            }
+            
+          }
+    });
+  });
+
+
+
+      //style="opacity:0
+      
+    </script>
+       
+    
+{{ footer }} 

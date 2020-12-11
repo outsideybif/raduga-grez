@@ -1,0 +1,174 @@
+{# {% if not redirect %}
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-left">{{ column_name }}</td>
+        <td class="text-left">{{ column_model }}</td>
+        <td class="text-right">{{ column_quantity }}</td>
+        <td class="text-right">{{ column_price }}</td>
+        <td class="text-right">{{ column_total }}</td>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% for product in products %}
+    <tr>
+      <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %} <br />
+        &nbsp;<small> - {{ option.name }}: {{ option.value }}</small> {% endfor %}
+        {% if product.recurring %} <br />
+        <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small> {% endif %}</td>
+      <td class="text-left">{{ product.model }}</td>
+      <td class="text-right">{{ product.quantity }}</td>
+      <td class="text-right">{{ product.price }}</td>
+      <td class="text-right">{{ product.total }}</td>
+    </tr>
+    {% endfor %}
+    {% for voucher in vouchers %}
+    <tr>
+      <td class="text-left">{{ voucher.description }}</td>
+      <td class="text-left"></td>
+      <td class="text-right">1</td>
+      <td class="text-right">{{ voucher.amount }}</td>
+      <td class="text-right">{{ voucher.amount }}</td>
+    </tr>
+    {% endfor %}
+      </tbody>
+    
+    <tfoot>
+    
+    {% for total in totals %}
+    <tr>
+      <td colspan="4" class="text-right"><strong>{{ total.title }}:</strong></td>
+      <td class="text-right">{{ total.text }}</td>
+    </tr>
+    {% endfor %}
+      </tfoot>
+    
+  </table>
+</div> #}
+
+
+
+
+
+
+
+
+
+
+
+{# <div id="payment-form"></div>
+<script>
+//Инициализация виджета. Все параметры обязательные.
+
+  console.log("000000");
+  console.log(window.YandexCheckout);
+  console.log(YandexCheckout);
+  console.log("000000");
+
+  const YC = YandexCheckout
+
+  const checkout = new YC({
+    confirmation_token: 'f74d2c4f-6af9-4083-ae1b-3edcfab723fe', //Токен, который перед проведением оплаты нужно получить от Яндекс.Кассы
+    return_url: 'https://merchant.site', //Ссылка на страницу завершения оплаты
+    error_callback(error) {
+      //Обработка ошибок инициализации
+    }
+  });
+  //Отображение платежной формы в контейнере
+  checkout.render('payment-form');
+
+</script> #}
+
+
+
+
+
+
+
+
+{# <script src="https://static.yamoney.ru/checkout-js/v1/checkout.js"></script>
+
+<script> 
+  const checkout = YandexCheckout("f74d2c4f-6af9-4083-ae1b-3edcfab723fe");
+</script> #}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <checkout-saved-input class="checkout-saved-input">
+               <div class="checkout-saved-input__wrapper">
+                  <div class="checkout-saved-input__label">Contact:</div>
+                  <input class="checkout-saved-input__input" type="text" name="email" placeholder="Email*" disabled="disabled" value="{{email}}">
+                  <div class="checkout-saved-input__edit back-to-informations">Edit</div>
+               </div>
+               <div class="checkout-saved-input__error"></div>
+            </checkout-saved-input>
+            <checkout-saved-input class="checkout-saved-input">
+               <div class="checkout-saved-input__wrapper">
+                  <div class="checkout-saved-input__label">Ship to:</div>
+                  <input class="checkout-saved-input__input" type="text" name="address" placeholder="Email*" disabled="disabled" value="Very Khoruzhey street 34-11, Minsk, 162538, Belarus">
+                  <div class="checkout-saved-input__edit back-to-informations">Edit</div>
+               </div>
+               <div class="checkout-saved-input__error"></div>
+            </checkout-saved-input>
+            <div class="checkout-form__title">Payment</div>
+            <div class="checkout-form__payment-methods">
+               
+               
+               <checkout-collapsible class="checkout-collapsible">
+                  <div class="checkout-collapsible__method-information">
+                     <div class="checkout-collapsible__method-checked"></div>
+                     <div class="checkout-collapsible__method-name">Paypal</div>
+                  </div>
+                  <div class="checkout-collapsible__method-image">
+                     <img src="./catalog/view/theme/default/assets/images/mastercard-visa.png">
+                     <div class="checkout-collapsible__and-more">and more...</div>
+                  </div>
+               </checkout-collapsible>
+               <div class="checkout-collapsible-content">
+                  {{ payment_paypal }}
+               </div>
+
+
+               <checkout-collapsible class="checkout-collapsible">
+                  <div class="checkout-collapsible__method-information">
+                     <div class="checkout-collapsible__method-checked"></div>
+                     <div class="checkout-collapsible__method-name">Tinkoff</div>
+                  </div>
+                  <div class="checkout-collapsible__method-image">
+                     <img src="./catalog/view/theme/default/assets/images/mastercard-visa.png">
+                     <div class="checkout-collapsible__and-more">and more...</div>
+                  </div>
+               </checkout-collapsible>
+               <div class="checkout-collapsible-content">
+                  {{ payment_tinkoff }}
+               </div>
+
+
+
+
+
+
+
+
+
+            </div>
+
+{# {% else %} 
+<script type="text/javascript"><!--
+location = '{{ redirect }}';
+//--></script> 
+{% endif %}  #}

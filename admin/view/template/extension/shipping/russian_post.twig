@@ -1,0 +1,506 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+	    <button onclick="$('#content #apply').attr('value', '1'); $('#' + $('#content form').attr('id')).submit();" data-toggle="tooltip" title="{{ button_apply }}" class="btn btn-success"><i class="fa fa-save"></i></button>
+        <button type="submit" form="form-ups" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+	{% if error_success %}
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ error_success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-russian-post" class="form-horizontal">
+		  <input type="hidden" name="apply" id="apply" value="0">
+		  <ul class="nav nav-tabs">
+			<li class="active"><a href="#tab-shipping" data-toggle="tab">{{ tab_shipping }}</a></li>
+			<li><a href="#tab-setting" data-toggle="tab">{{ tab_setting }}</a></li>
+		  </ul>
+		  <div class="tab-content">
+			<div class="tab-pane active" id="tab-shipping">
+			  <div class="row">
+				<div class="col-sm-4">
+				  <ul class="nav nav-pills nav-stacked" id="russian-post">
+					{% set module_row = 0 %}
+					{% if shipping_russian_post %}
+					{% for module in shipping_russian_post %}
+					<li class="row-{{ module_row }}{% if module_row == 0 %} active {% endif %}"><a class="item" href="#tab-{{ module_row }}" data-toggle="tab">{{ lang[module.type] }} <i class="pull-right fa fa-trash-o" onclick="showAlert(); $('.row-{{ module_row }}').remove(); $('#russian-post a:first').tab('show');"></i></a></li>
+					{% set module_row = module_row + 1 %}
+					{% endfor %}
+					{% endif %}
+					<li id="add-module">
+					  <div class="input-group">
+                        <select name="select_shipping" class="form-control">
+						  {% for i in 0..32 %}
+						  <option value="{{ i }}">{{ lang[i] }}</option>
+						  {% endfor %}
+						</select>
+                        <span class="input-group-btn">
+                          <span onclick="addModule();" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></span>
+	                    </span>
+                      </div>
+					</li>
+				  </ul>
+				</div>
+				<div class="col-sm-8">
+				  <div class="tab-content">
+					{% set module_row = 0 %}
+					{% if shipping_russian_post %}
+					{% for module in shipping_russian_post %}
+					<div class="row-{{ module_row }} tab-pane{% if module_row == 0 %} active {% endif %}" id="tab-{{ module_row }}">
+					  <input value="{{ module.type }}" type="hidden" name="shipping_russian_post[{{ module_row }}][type]" />
+					  <div class="form-group">
+						<label class="col-sm-4 control-label" for="input-free-{{ module_row }}">{{ entry_free }}</label>
+						<div class="col-sm-8">
+						  <input type="text" name="shipping_russian_post[{{ module_row }}][free]" value="{{ module.free }}" id="input-free-{{ module_row }}" placeholder="{{ entry_free }}" class="form-control" />
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label class="col-sm-4 control-label" for="input-min-limit-{{ module_row }}">{{ entry_limit }}</label>
+						<div class="col-sm-8">
+						  <div class="row">
+							<div class="col-sm-6">
+							  <input type="text" name="shipping_russian_post[{{ module_row }}][min_limit]" value="{{ module.min_limit }}" id="input-min-limit-{{ module_row }}" placeholder="{{ entry_min_limit }}" class="form-control" />
+							</div>
+							<div class="col-sm-6">
+							  <input type="text" name="shipping_russian_post[{{ module_row }}][max_limit]" value="{{ module.max_limit }}" id="input-max-limit-{{ module_row }}" placeholder="{{ entry_max_limit }}" class="form-control" />
+							</div>
+						  </div>
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label class="col-sm-4 control-label" for="input-cost-{{ module_row }}">{{ entry_cost }}</label>
+						<div class="col-sm-8">
+						  <div class="row">
+							<div class="col-sm-6">
+							  <input type="text" name="shipping_russian_post[{{ module_row }}][cost]" value="{{ module.cost }}"  id="input-cost-{{ module_row }}" placeholder="{{ entry_cost }}" class="form-control" />
+							</div>
+							<div class="col-sm-6">
+							  <select name="shipping_russian_post[{{ module_row }}][cost_prefix]" class="form-control">
+								{% if module.cost_prefix == '+' %}
+								<option selected="selected" value="+">+</option>
+								<option value="%">%</option>
+								{% else %}
+								<option value="+">+</option>
+								<option selected="selected" value="%">%</option>
+								{% endif %}
+							  </select>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label class="col-sm-4 control-label" for="input-max-shipping-time-{{ module_row }}">{{ entry_max_shipping_time }}</label>
+						<div class="col-sm-8">
+						  <input type="text" name="shipping_russian_post[{{ module_row }}][max_shipping_time]" value="{{ module.max_shipping_time }}" id="input-max-shipping-time-{{ module_row }}" placeholder="{{ entry_max_shipping_time }}" class="form-control" />
+						</div>
+					  </div>
+					  <div class="form-group">
+					    <label class="col-sm-4 control-label" for="input-split-{{ module_row }}">{{ entry_split }}</label>
+					    <div class="col-sm-8">
+						  <select name="shipping_russian_post[{{ module_row }}][split]" id="input-split" class="form-control">
+						    {% if module.split %}
+						    <option value="1" selected="selected">{{ text_enabled }}</option>
+						    <option value="0">{{ text_disabled }}</option>
+							{% else %}
+						    <option value="1">{{ text_enabled }}</option>
+						    <option value="0" selected="selected">{{ text_disabled }}</option>
+						    {% endif %}
+						  </select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+						<label class="col-sm-4 control-label" for="input-max-split-{{ module_row }}">{{ entry_max_split }}</label>
+						<div class="col-sm-8">
+						  <input type="text" name="shipping_russian_post[{{ module_row }}][max_split]" value="{{ module.max_split }}" id="input-max-split-{{ module_row }}" placeholder="{{ entry_max_split }}" class="form-control" />
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label class="col-sm-4 control-label">{{ entry_image }}</label>
+						<div class="col-sm-8">
+						  <a href="" id="thumb-image{{ module_row }}" data-toggle="image"><img src="{{ module.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="shipping_russian_post[{{ module_row }}][image]" value="{{ module.image }}" id="input-image{{ module_row }}" />
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label class="col-sm-4 control-label" for="input-tax-class-{{ module_row }}">{{ entry_tax_class }}</label>
+						<div class="col-sm-8">
+						  <select name="shipping_russian_post[{{ module_row }}][tax_class_id]" id="input-tax-class-{{ module_row }}" class="form-control">
+							<option value="0">{{ text_none }}</option>
+							{% for tax_class in tax_classes %}
+							{%  if tax_class.tax_class_id == module.tax_class_id %}
+							<option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+							{% else %}
+							<option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+							{% endif %}
+							{% endfor %}
+						  </select>
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label class="col-sm-4 control-label" for="input-geo-zone-{{ module_row }}">{{ entry_geo_zone }}</label>
+						<div class="col-sm-8">
+						  <select name="shipping_russian_post[{{ module_row }}][geo_zone_id]" id="input-geo-zone-{{ module_row }}" class="form-control">
+							<option value="0">{{ text_all_zones }}</option>
+							{% for geo_zone in geo_zones %}
+							{% if geo_zone.geo_zone_id == module.geo_zone_id %}
+							<option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+							{% else %}
+							<option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+							{% endif %}
+							{% endfor %}
+						  </select>
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label class="col-sm-4 control-label" for="input-status-{{ module_row }}">{{ entry_status }}</label>
+						<div class="col-sm-8">
+						  <select name="shipping_russian_post[{{ module_row }}][status]" id="input-status-{{ module_row }}" class="form-control">
+							{% if module.status %}
+							<option value="1" selected="selected">{{ text_enabled }}</option>
+							<option value="0">{{ text_disabled }}</option>
+							{% else %}
+							<option value="1">{{ text_enabled }}</option>
+							<option value="0" selected="selected">{{ text_disabled }}</option>
+							{% endif %}
+						  </select>
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label class="col-sm-4 control-label" for="input-sort-order-{{ module_row }}">{{ entry_sort_order }}</label>
+						<div class="col-sm-8">
+						  <input type="text" name="shipping_russian_post[{{ module_row }}][sort_order]" value="{{ module.sort_order }}" id="input-sort-order-{{ module_row }}" placeholder="{{ entry_sort_order }}" class="form-control" />
+						</div>
+					  </div>
+					</div>
+					{% set module_row = module_row + 1 %}
+					{% endfor %}
+					{% else %}
+					<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_no_shipping }} 
+					<button type="button" class="close" data-dismiss="alert">&times;</button></div>
+					{% endif %}
+					<div id="new-tab"></div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			<div class="tab-pane" id="tab-setting">
+			  <fieldset>
+                <legend>{{ text_general }}</legend>
+				<div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-ststus">{{ entry_status }}</label>
+				  <div class="col-sm-10">
+				    <select name="shipping_russian_post_status" id="input-ststus" class="form-control">
+					  {% if shipping_russian_post_status %}
+					  <option value="1" selected="selected">{{ text_enabled }}</option>
+					  <option value="0">{{ text_disabled }}</option>
+					  {% else %}
+					  <option value="1">{{ text_enabled }}</option>
+					  <option value="0" selected="selected">{{ text_disabled }}</option>
+					  {% endif %}
+				    </select>
+				  </div>
+			    </div>
+				<div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
+				  <div class="col-sm-10">
+				    <input type="text" name="shipping_russian_post_key" value="{{ shipping_russian_post_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
+					{% if error_key %}
+				    <div class="text-danger">{{ error_key }}</div>
+				    {% endif %}
+				  </div>
+			    </div>
+				<div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-type-query">{{ entry_type_query }}</label>
+				  <div class="col-sm-10">
+				    <select name="shipping_russian_post_type_query" id="input-type-query" class="form-control">
+					  {% if shipping_russian_post_type_query %}
+					  <option value="1" selected="selected">{{ text_api }}</option>
+					  <option value="0">{{ text_light }}</option>
+					  {% else %}
+					  <option value="1">{{ text_api }}</option>
+					  <option value="0" selected="selected">{{ text_light }}</option>
+					  {% endif %}
+				    </select>
+				  </div>
+			    </div>
+				<div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-server">{{ entry_server }}</label>
+				  <div class="col-sm-10">
+				    <select name="shipping_russian_post_server" id="input-server" class="form-control">
+					  {% if shipping_russian_post_server == 'test.postcalc.ru' %}
+					  <option value="api.postcalc.ru">{{ text_api_postcalc }}</option>
+					  <option value="test.postcalc.ru" selected="selected">{{ text_test_postcalc }}</option>
+					  {% else %}
+					  <option value="api.postcalc.ru" selected="selected">{{ text_api_postcalc }}</option>
+					  <option value="test.postcalc.ru">{{ text_test_postcalc }}</option>
+					  {% endif %}
+				    </select>
+				  </div>
+			    </div>
+			    <div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+				  <div class="col-sm-10">
+				    <input type="text" name="shipping_russian_post_sort_order" value="{{ shipping_russian_post_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+				  </div>
+			    </div>
+			    <div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-show-image">{{ entry_show_image }}</label>
+				  <div class="col-sm-10">
+				    <select name="shipping_russian_post_show_image" id="input-show-image" class="form-control">
+					  {% if shipping_russian_post_show_image %}
+					  <option value="1" selected="selected">{{ text_enabled }}</option>
+					  <option value="0">{{ text_disabled }}</option>
+					  {% else %}
+					  <option value="1">{{ text_enabled }}</option>
+					  <option value="0" selected="selected">{{ text_disabled }}</option>
+					  {% endif %}
+				    </select>
+				  </div>
+			    </div>
+			    <div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-image-width"><span data-toggle="tooltip" title="{{ help_image_size }}">{{ entry_image_size }}</span></label>
+				  <div class="col-sm-10">
+				    <div class="row">
+					  <div class="col-sm-6">
+					    <input type="text" name="shipping_russian_post_image_width" value="{{ shipping_russian_post_image_width }}" placeholder="{{ entry_width }}" id="input-image-width" class="form-control" />
+					  </div>
+					  <div class="col-sm-6">
+					    <input type="text" name="shipping_russian_post_image_height" value="{{ shipping_russian_post_image_height }}" placeholder="{{ entry_height }}" class="form-control" />
+					  </div>
+				    </div>
+				  </div>
+			    </div>
+			    <div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
+				  <div class="col-sm-10">
+				    <select name="shipping_russian_post_debug" id="input-debug" class="form-control">
+					  {% if shipping_russian_post_debug %}
+					  <option value="1" selected="selected">{{ text_enabled }}</option>
+					  <option value="0">{{ text_disabled }}</option>
+					  {% else %}
+					  <option value="1">{{ text_enabled }}</option>
+					  <option value="0" selected="selected">{{ text_disabled }}</option>
+					  {% endif %}
+				    </select>
+				  </div>
+			    </div>
+			  </fieldset>
+			  <fieldset>
+                <legend>{{ text_cart }}</legend>
+				<div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="{{ help_weight_class }}">{{ entry_weight_class }}</span></label>
+				  <div class="col-sm-10">
+				    <select name="shipping_russian_post_weight_class_id" id="input-weight-class" class="form-control">
+					  {% for weight_class in weight_classes %}
+					  {% if weight_class.weight_class_id == shipping_russian_post_weight_class_id %}
+					  <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
+					  {% else %}
+					  <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
+					  {% endif %}
+					  {% endfor %}
+				    </select>
+				  </div>
+			    </div>
+			    <div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-weight">{{ entry_weight }}</label>
+				  <div class="col-sm-10">
+				    <input type="text" name="shipping_russian_post_weight" value="{{ shipping_russian_post_weight }}" placeholder="{{ entry_weight }}" id="input-weight" class="form-control" />
+				  </div>
+			    </div>
+				<div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-package">{{ entry_package }}</label>
+				  <div class="col-sm-10">
+				    <div class="row">
+					  <div class="col-sm-6">
+					    <input type="text" name="shipping_russian_post_package[weight]" value="{{ shipping_russian_post_package.weight }}" id="input-package" placeholder="{{ entry_package }}" class="form-control" />
+					  </div>
+					  <div class="col-sm-6">
+					    <select name="shipping_russian_post_package[prefix]" class="form-control">
+						  {% if shipping_russian_post_package.prefix == '+' %}
+						  <option selected="selected" value="+">+</option>
+						  <option value="%">%</option>
+						  {% else %}
+						  <option value="+">+</option>
+						  <option selected="selected" value="%">%</option>
+						  {% endif %}
+					    </select>
+					  </div>
+				    </div>
+				  </div>
+			    </div>
+			    <div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-declare">{{ entry_declare }}</label>
+				  <div class="col-sm-10">
+				    <select name="shipping_russian_post_declare" id="input-declare" class="form-control">
+					  {% if shipping_russian_post_declare %}
+					  <option value="1" selected="selected">{{ text_enabled }}</option>
+					  <option value="0">{{ text_disabled }}</option>
+					  {% else %}
+					  <option value="1">{{ text_enabled }}</option>
+					  <option value="0" selected="selected">{{ text_disabled }}</option>
+					  {% endif %}
+				    </select>
+				  </div>
+			    </div>
+			  </fieldset>
+			  <fieldset>
+                <legend>{{ text_shipping }}</legend>
+				<div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-postcode-default"><span data-toggle="tooltip" title="{{ help_postcode_default }}">{{ entry_postcode_default }}</span></label>
+				  <div class="col-sm-10">
+				    <input type="text" name="shipping_russian_post_postcode_default" value="{{ shipping_russian_post_postcode_default }}" placeholder="{{ entry_postcode_default }}" id="input-postcode-default" class="form-control" />
+				  </div>
+			    </div>
+			    <div class="form-group required">
+				  <label class="col-sm-2 control-label" for="input-city">{{ entry_city }}</label>
+				  <div class="col-sm-10">
+				    <input type="text" name="shipping_russian_post_city" value="{{ shipping_russian_post_city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
+				    {% if error_city %}
+				    <div class="text-danger">{{ error_city }}</div>
+				    {% endif %}
+				  </div>
+			    </div>
+			    <div class="form-group required">
+				  <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
+				  <div class="col-sm-10">
+				    <input type="text" name="shipping_russian_post_postcode" value="{{ shipping_russian_post_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
+				    {% if error_postcode %}
+				    <div class="text-danger">{{ error_postcode }}</div>
+				    {% endif %}
+				  </div>
+			    </div>
+			    <div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-show-shipping-time">{{ entry_show_shipping_time }}</label>
+				  <div class="col-sm-10">
+				    <select name="shipping_russian_post_show_shipping_time" id="input-show-shipping-time" class="form-control">
+					  {% if shipping_russian_post_show_shipping_time %}
+					  <option value="1" selected="selected">{{ text_enabled }}</option>
+					  <option value="0">{{ text_disabled }}</option>
+					  {% else %}
+					  <option value="1">{{ text_enabled }}</option>
+					  <option value="0" selected="selected">{{ text_disabled }}</option>
+					  {% endif %}
+				    </select>
+				  </div>
+			    </div>
+				<div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-split">{{ entry_split }}</label>
+				  <div class="col-sm-10">
+				    <select name="shipping_russian_post_split" id="input-split" class="form-control">
+					  {% if shipping_russian_post_split %}
+					  <option value="1" selected="selected">{{ text_enabled }}</option>
+					  <option value="0">{{ text_disabled }}</option>
+					  {% else %}
+					  <option value="1">{{ text_enabled }}</option>
+					  <option value="0" selected="selected">{{ text_disabled }}</option>
+					  {% endif %}
+				    </select>
+				  </div>
+			    </div>
+			    <div class="form-group">
+				  <label class="col-sm-2 control-label" for="input-hide">{{ entry_hide }}</label>
+				  <div class="col-sm-10">
+				    <select name="shipping_russian_post_hide" id="input-hide" class="form-control">
+					  {% if shipping_russian_post_hide %}
+					  <option value="1" selected="selected">{{ text_enabled }}</option>
+					  <option value="0">{{ text_disabled }}</option>
+					  {% else %}
+					  <option value="1">{{ text_enabled }}</option>
+					  <option value="0" selected="selected">{{ text_disabled }}</option>
+					  {% endif %}
+				    </select>
+				  </div>
+			    </div>
+			  </fieldset>
+			</div>
+		  </div>
+		</form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+function showAlert() {
+	if ($('#russian-post li').length == 2) {
+		$('#new-tab').before('<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_no_shipping }}<button type="button" class="close" data-dismiss="alert">&times;</button></div>');	
+	}
+}
+
+var module_row = {{ module_row }};
+
+function addModule() {
+	$('.alert-info').remove();
+	
+	var type_val = $('select[name=\'select_shipping\']').val();
+	var type_text = $('select[name=\'select_shipping\'] option:selected').text();
+	
+	html   = '<div class="row-' + module_row + ' tab-pane" id="tab-' + module_row + '">';
+	
+	html  += '<input value="' + type_val + '" type="hidden" name="shipping_russian_post[' + module_row + '][type]" />';
+	
+	html  += '<div class="form-group"><label class="col-sm-4 control-label" for="input-free-' + module_row + '">{{ entry_free }}</label><div class="col-sm-8"><input type="text" name="shipping_russian_post[' + module_row + '][free]" value="" id="input-free-' + module_row + '" placeholder="{{ entry_free }}" class="form-control" /></div></div>';
+	
+	html  += '<div class="form-group"><label class="col-sm-4 control-label" for="input-min-limit-' + module_row + '">{{ entry_limit }}</label><div class="col-sm-8"><div class="row"><div class="col-sm-6"><input type="text" name="russian_post[' + module_row + '][min_limit]" value="" id="input-min-limit-' + module_row + '" placeholder="{{ entry_min_limit }}" class="form-control" /></div><div class="col-sm-6"><input type="text" name="russian_post[' + module_row + '][max_limit]" value="" id="input-max-limit-' + module_row + '" placeholder="{{ entry_max_limit }}" class="form-control" /></div></div></div></div>';
+	
+	html  += '<div class="form-group"><label class="col-sm-4 control-label" for="input-cost-' + module_row + '">{{ entry_cost }}</label><div class="col-sm-8"><div class="row"><div class="col-sm-6"><input type="text" name="shipping_russian_post[' + module_row + '][cost]" value="" id="input-cost-' + module_row + '" placeholder="{{ entry_cost }}" class="form-control" /></div><div class="col-sm-6"><select name="shipping_russian_post[' + module_row + '][cost_prefix]" class="form-control"><option value="+">+</option><option value="%">%</option></select></div></div></div></div>';
+	
+	html  += '<div class="form-group"><label class="col-sm-4 control-label" for="input-max-shipping-time-' + module_row + '">{{ entry_max_shipping_time }}</label><div class="col-sm-8"><input type="text" name="shipping_russian_post[' + module_row + '][max_shipping_time]" value="" id="input-max-shipping-time-' + module_row + '" placeholder="{{ entry_max_shipping_time }}" class="form-control" /></div></div>';
+	
+	html  += '<div class="form-group"><label class="col-sm-4 control-label" for="input-split-' + module_row + '">{{ entry_split }}</label><div class="col-sm-8"><select name="russian_post[' + module_row + '][split]" id="input-split" placeholder="{{ entry_split }}"  class="form-control"><option value="1">{{ text_enabled }}</option><option value="0" selected="selected">{{ text_disabled }}</option></select></div></div>';
+					  
+	html  += '<div class="form-group"><label class="col-sm-4 control-label" for="input-max-split-' + module_row + '">{{ entry_max_split }}</label><div class="col-sm-8"><input type="text" name="russian_post[' + module_row + '][max_split]" value="" id="input-max-split-' + module_row + '" placeholder="{{ entry_max_split }}" class="form-control" /></div></div>';
+	
+	html  += '<div class="form-group"><label class="col-sm-4 control-label">{{ entry_image }}</label><div class="col-sm-8"><a href="" id="thumb-image' + module_row + '" data-toggle="image"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="shipping_russian_post[' + module_row + '][image]" value="" id="input-image' + module_row + '" /></div></div>';
+	
+	html  += '<div class="form-group"><label class="col-sm-4 control-label" for="input-tax-class-' + module_row + '">{{ entry_tax_class }}</label><div class="col-sm-8"><select name="shipping_russian_post[' + module_row + '][tax_class_id]" id="input-tax-class-' + module_row + '" class="form-control"><option value="0">{{ text_none }}</option>';
+	
+	{% for tax_class in tax_classes %}
+	html += '<option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>';
+    {% endfor %}
+	
+	html += '</select></div></div>';
+	
+	html += '<div class="form-group"><label class="col-sm-4 control-label" for="input-geo-zone-' + module_row + '">{{ entry_geo_zone }}</label><div class="col-sm-8"><select name="shipping_russian_post[' + module_row + '][geo_zone_id]" id="input-geo-zone-' + module_row + '" class="form-control"><option value="0">{{ text_all_zones }}</option>';
+    
+	{% for geo_zone in geo_zones %}
+	html += '<option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>';
+    {% endfor %}
+	
+	html += '</select></div></div>';
+	
+	html += '<div class="form-group"><label class="col-sm-4 control-label" for="input-status-' + module_row + '">{{ entry_status }}</label><div class="col-sm-8"><select name="shipping_russian_post[' + module_row + '][status]" id="input-status-' + module_row + '" class="form-control"><option selected="selected" value="1">{{ text_enabled }}</option><option value="0">{{ text_disabled }}</option></select></select></div></div>';
+	
+	html += '<div class="form-group"><label class="col-sm-4 control-label" for="input-sort-order-' + module_row + '">{{ entry_sort_order }}</label><div class="col-sm-8"><input type="text" name="shipping_russian_post[' + module_row + '][sort_order]" value="" id="input-sort-order-' + module_row + '" placeholder="{{ entry_sort_order }}" class="form-control" /></div></div></div>';				
+
+	$('#new-tab').before(html);
+	
+	html2 = '<li class="row-' + module_row + '"><a href="#tab-' + module_row + '" data-toggle="tab">' + type_text + ' <i class="pull-right fa fa-trash-o" onclick="showAlert(); $(\'.row-' + module_row + '\').remove(); $(\'#russian-post a:first\').tab(\'show\')"></i></a></li>';
+	
+	$('#add-module').before(html2);
+	
+	$('#russian-post a:last').tab('show');
+
+	module_row++;
+}
+//--></script>
+{{ footer }}

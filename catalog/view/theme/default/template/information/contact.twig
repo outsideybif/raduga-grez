@@ -1,0 +1,69 @@
+{{ header }}
+
+<block-layout class="block-layout-navigation standard-layout">
+   <contact-form class="contact-form">
+      <div class="contact-form__form-wrapper">
+         <div class="contact-form__title" animation="fade-up" animation-delay="0">{{contact_form_title}}</div>
+         <div class="contact-form__subtitle" animation="fade-up" animation-delay="0.1">{{contact_form_subtitle}}</div>
+         <div class="contact-form__form showed">
+            <input-contact-field class="input-contact-field" animation="fade-up" animation-delay="0.1">
+               <input class="input-contact-field__input" type="text" name="name">
+               <div class="input-contact-field__error"></div>
+               <div class="input-contact-field__placeholder">Name</div>
+            </input-contact-field>
+            <input-contact-field class="input-contact-field" validation="email" animation="fade-up" animation-delay="0.1">
+               <input class="input-contact-field__input" type="text" name="email">
+               <div class="input-contact-field__error"></div>
+               <div class="input-contact-field__placeholder">Email</div>
+            </input-contact-field>
+            <input-contact-field class="input-contact-field" animation="fade-up" animation-delay="0.1">
+               <textarea class="input-contact-field__textarea" type="text" name="comment" row="5" col="5"></textarea>
+               <div class="input-contact-field__error"></div>
+               <div class="input-contact-field__placeholder">Message</div>
+            </input-contact-field>
+         </div>
+         <div class="contact-form__form-actions" animation="fade-up" animation-delay="0.1">
+            <circle-button class="circle-button dark">
+               Send
+            </circle-button>
+         </div>
+        <div class="contact-form__form-confirm">
+           <div class="contact-form__form-confirm-title">Thank you, we will contact you as soon as possible!</div>
+           <div class="contact-form__form-confirm-back">
+              <img class="contact-form__back-icon" src="./catalog/view/theme/default/assets/images/arrow-left-dark.svg" alt="" role="presentation">
+              <div class="contact-form__form-confirm-back-label">Back</div>
+           </div>
+        </div>
+      </div>
+      <div class="contact-form__contact-image" animation="fade-up" animation-delay="0.1"> 
+        <span class="inner is-inview" data-scroll="" data-scroll-speed="-1">
+        	<img src="/image/{{contact_form_image}}">
+     	</span>
+     </div>
+   </contact-form>
+</block-layout>
+  
+<contact-infrmation class="contact-information block-layout standard-layout">
+   <div class="contact-information__image"><img src="/image/{{contact_information_image}}"></div>
+   <div class="contact-information__information">
+      <div class="title-small">{{contact_information_text}}</div>
+      
+      <a class="dark" href="mailto:{{contact_information_mail}}">
+         <div class="contact-information__email underline u-big">{{contact_information_mail}}</div>
+      </a>
+      <div class="contact-information__footer">
+         <div class="contact-information__time">
+            <div class="contact-information__footer-title">{{contact_information_time_title}}</div>
+            <p>{{contact_information_time_day}}</p>
+            <p>{{contact_information_time_hours}}</p>
+         </div>
+         <div class="contact-information__socials">
+            <div class="contact-information__footer-title">{{contact_information_socials_title}}</div>
+            <a class="contact-information__social-item dark" href="{{contact_information_instagram}}" target="_blank">Instagram</a>
+            <a class="contact-information__social-item dark" href="{{contact_information_facebook}}" target="_blank">Facebook</a>
+            <a class="contact-information__social-item dark" href="{{contact_information_pinterest}}" target="_blank">Pinterest</a>
+         </div>
+      </div>
+   </div>
+</contact-infrmation>
+{{ footer }}

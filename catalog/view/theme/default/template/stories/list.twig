@@ -1,0 +1,52 @@
+{{ header }}
+
+<centered-title class="centered-title">
+   <div class="centered-title__content">STORIES</div>
+</centered-title>
+
+<stories-grid class="stories-grid">
+   {% set time = 0 %}
+   {% set index = 0 %}
+   {% set time = time + 0.15 %}
+    {% for story in stories %}
+    
+        <div class="story" style="opacity:0" animation="fade-up" animation-delay="{{time}}">
+            <a class="story__inner" href="{{story.href}}">
+               <span class="inner">
+                    <span class="inner__image" data-scroll="data-scroll" data-scroll-speed="-0.3">
+                        
+                         {% if story.video != "" %}
+                        <video class="media" autoplay="" loop="" muted="" playsinline=""><source src="{{ story.video }}"></video>
+                        {% else %}
+                        <img class="media" src="{{story.thumb}}">
+                        {% endif %}
+                    </span>
+                </span>
+
+                <span class="story__date">{{story.date}}</span>
+                <span class="story__title">{{story.title}}</span>
+            </a>
+        </div>
+    {% endfor %}
+
+</stories-grid>
+
+
+
+<stories-pagination class="stories-pagination">
+ {% if isFirst == false %}
+   <a href="{{prevLink}}" class="stories-pagination__prev">Prev</a>
+   {% endif %}
+   <div class="stories-pagination__pages">
+   
+        {% for pagination in paginations %}
+            <a href="{{ pagination.link }}" class="stories-pagination__page {% if pagination.active %} active {% endif %}">{{pagination.page}}</a>
+        {% endfor %}   
+   </div>
+   {% if isLast == false %}
+    <a href="{{nextLink}}" class="stories-pagination__next">Next</a>
+    {% endif %}
+</stories-pagination>
+
+
+{{ footer }} 

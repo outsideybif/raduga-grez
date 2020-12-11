@@ -1,0 +1,123 @@
+2020-09-17 13:17:36 - MOD: Modification Default
+
+FILE: system/engine/action.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 69
+
+FILE: system/engine/loader.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 77
+LINE: 151
+LINE: 168
+
+FILE: system/library/config.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 59
+
+FILE: system/library/language.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 67
+LINE: 73
+
+FILE: system/library/template/template.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 18
+
+FILE: system/library/template/twig.php
+CODE: $loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
+NOT FOUND - OPERATIONS ABORTED!
+----------------------------------------------------------------
+MOD: Y.CMS for Opencart 3.x
+
+FILE: catalog/controller/account/order.php
+CODE: // History
+LINE: 319
+
+FILE: catalog/view/theme/default/template/account/order_info.twig
+CODE: </tfoot>
+LINE: 118
+
+FILE: admin/model/sale/order.php
+REGEX: ~o.date_added, o.date_modified FROM~
+LINE: 151
+REGEX: /\$query\s=\s\$this->db->query\(\$sql\);\s+return\s\$query->rows;/
+LINE: 224
+
+FILE: admin/language/en-gb/sale/order.php
+REGEX: ~(\$_\[\'text_add\'\])~
+LINE: 8
+
+FILE: system/library/mail.php
+CODE: basename(urlencode($attachment))
+NOT FOUND - OPERATION SKIPPED!
+
+FILE: admin/controller/sale/order.php
+CODE: 'shipping_code' => $result['shipping_code'],
+LINE: 242
+CODE: $data['user_token'] = $this->session->data['user_token'];
+LINE: 254
+LINE: 482
+LINE: 814
+
+FILE: admin/view/template/sale/order_list.twig
+CODE: <li><a href="{{ order.edit }}"><i class="fa fa-pencil"></i> {{ button_edit }}</a></li>
+LINE: 149
+CODE: $('input[name^=\'selected\']:first').trigger('change');
+LINE: 324
+
+FILE: catalog/controller/common/footer.php
+CODE: $data['newsletter'] = $this->url->link('account/newsletter'
+LINE: 35
+
+FILE: catalog/controller/checkout/success.php
+CODE: if (isset($this->session->data['order_id'])) {
+LINE: 9
+
+FILE: catalog/view/theme/default/template/common/success.twig
+CODE: {{ footer }}
+LINE: 24
+
+FILE: catalog/view/theme/default/template/common/footer.twig
+CODE: <footer
+LINE: 30
+LINE: 121
+CODE: <p>{{ powered }}</p>
+LINE: 76
+
+FILE: catalog/controller/common/header.php
+CODE: $data['menu'] = $this->load->controller('common/menu');
+LINE: 80
+
+FILE: catalog/view/theme/default/template/common/header.twig
+CODE: </head>
+LINE: 47
+
+FILE: catalog/controller/product/product.php
+CODE: if ($product_info) {
+LINE: 177
+CODE: $data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+LINE: 304
+
+FILE: catalog/view/theme/default/template/product/product.twig
+CODE: <div id="product"> {% if options %}
+LINE: 670
+CODE: {{ footer }}
+LINE: 1106
+CODE: <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
+LINE: 677
+CODE: <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
+LINE: 691
+LINE: 707
+CODE: $(document).ready(function() {
+LINE: 1095
+
+FILE: admin/view/template/catalog/product_form.twig
+CODE: <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+NOT FOUND - OPERATION SKIPPED!
+
+FILE: admin/controller/catalog/product.php
+CODE: $data['layouts'] = $this->model_design_layout->getLayouts();
+LINE: 1164
+CODE: $this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
+LINE: 74
+----------------------------------------------------------------
